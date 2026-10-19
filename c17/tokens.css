@@ -1,0 +1,41 @@
+/* ==================================================================
+   Chess de L · tokens del sistema visual «Tecla pastel»
+   Compartidos por el contenedor (index.html) y las tres secciones.
+   ================================================================== */
+:root{
+  --c-fd:'Bricolage',ui-rounded,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --c-ft:'Instrument',system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+
+  --c-lila:#C9BCFF;  --c-lila-2:#B3A2FB;
+  --c-menta:#B6EDD3; --c-menta-2:#96DDBC;
+  --c-cielo:#BCD9FF; --c-cielo-2:#9CC5FB;
+  --c-melon:#FFCDB2; --c-melon-2:#FDB792;
+  --c-mant:#FFEB9E;  --c-mant-2:#F9DC6E;
+  --c-rosa:#FFC8DE;
+
+  --c-r-s:12px; --c-r-m:16px; --c-r-l:24px; --c-r-xl:30px;
+  --c-mov:cubic-bezier(.22,1,.36,1);
+  --c-rebote:cubic-bezier(.34,1.56,.64,1);
+}
+html[data-modo="claro"]{
+  --c-papel:#F3F1FA; --c-hondo:#E9E5F6; --c-sup:#FFFFFF; --c-sup2:#F8F7FD;
+  --c-tinta:#1B1730; --c-tinta2:#544E6E; --c-tinta3:#7D7898;
+  --c-linea:rgba(27,23,48,.12); --c-linea2:rgba(27,23,48,.22);
+  --c-borde:#1B1730;                 /* contorno de tecla */
+  --c-tecla:#1B1730;                 /* sombra dura bajo la tecla */
+  --c-violeta:#4B36C8; --c-sobre-violeta:#FFFFFF;
+  --c-bien:#1F8A5B; --c-mal:#C2335A;
+  --c-velo:rgba(27,23,48,.38);
+  --c-sombra:0 24px 60px -28px rgba(43,31,110,.38);
+}
+html[data-modo="oscuro"]{
+  --c-papel:#17142A; --c-hondo:#110F20; --c-sup:#221E38; --c-sup2:#2B2645;
+  --c-tinta:#F1EEFF; --c-tinta2:#B9B2D8; --c-tinta3:#8E87AE;
+  --c-linea:rgba(241,238,255,.12); --c-linea2:rgba(241,238,255,.24);
+  --c-borde:rgba(241,238,255,.30);
+  --c-tecla:#07060E;
+  --c-violeta:#B7A8FF; --c-sobre-violeta:#17142A;
+  --c-bien:#7FE0B0; --c-mal:#FF8FB0;
+  --c-velo:rgba(5,4,12,.62);
+  --c-sombra:0 28px 70px -26px rgba(0,0,0,.85);
+}
