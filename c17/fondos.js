@@ -27,7 +27,8 @@
     if(!f){r.removeAttribute('data-fondo');r.removeAttribute('data-fondo-tono');r.style.removeProperty('--c-fondo');return;}
     var oscuro=r.getAttribute('data-modo')==='oscuro';
     /* el velo se ajusta a la luz del fondo para que el texto siempre se lea */
-    var velo=oscuro?Math.min(.8,Math.max(.42,.34+f.l*.5)):Math.min(.74,Math.max(.36,.3+(.85-f.l)*.55));
+    /* claro: más velo cuanto más oscuro es el fondo; oscuro: el fondo se oscurece por filtro (conserva su color) y el velo es moderado */
+    var velo=oscuro?Math.min(.72,Math.max(.46,.42+f.l*.3)):Math.min(.82,Math.max(.5,.5+(.85-f.l)*.5));
     r.setAttribute('data-fondo',id);
     r.setAttribute('data-fondo-tono',f.l<.5?'oscuro':'claro');
     var abs;try{abs=new URL('c17/fondos/'+id+'.webp',document.baseURI).href;}catch(e){abs='c17/fondos/'+id+'.webp';}

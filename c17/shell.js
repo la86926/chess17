@@ -37,13 +37,21 @@
     /* cambios seguidos: más breve, para no hacer esperar a quien va y viene */
     var seguido=Date.now()-ultimoCambio<10000;ultimoCambio=Date.now();
     if(seguido)v.classList.add('breve');
+    /* si la sección se abre por primera vez, el velo espera a que termine de cargar */
+    var fr=document.getElementById('app-frame-'+destino),porCargar=!!(fr&&fr.tagName==='IFRAME'&&!fr.getAttribute('src'));
     requestAnimationFrame(function(){
       v.classList.add('abre');
       setTimeout(function(){
         hecho();
-        v.classList.add('sin-titulo');
-        setTimeout(function(){v.classList.add('cierra');setTimeout(function(){v.remove();},320);},seguido?60:140);
-      },seguido?260:380);
+        var cerrado=false;
+        function cerrar(){
+          if(cerrado)return;cerrado=true;
+          v.classList.add('sin-titulo');
+          setTimeout(function(){v.classList.add('cierra');setTimeout(function(){v.remove();},300);},seguido?60:90);
+        }
+        if(porCargar){fr.addEventListener('load',function(){setTimeout(cerrar,120);},{once:true});setTimeout(cerrar,3500);}
+        else cerrar();
+      },seguido?260:300);
     });
   }
   /* Solo cuando la persona elige en el menú; los cambios automáticos (la nube, enlaces) siguen al instante. */
@@ -105,7 +113,16 @@
   /* ---------- Mi ID: el pase ---------- */
   var cuenta=document.getElementById('mi-id-cuenta');
   function enlaceDe(id){return WEB+'?id='+encodeURIComponent(id);}
+  /* el generador de QR se descarga solo cuando hace falta (al ver el pase de Mi ID) */
+  var qrPedido=false;
+  function cargarQR(){
+    if(qrPedido)return;qrPedido=true;
+    var sc=document.createElement('script');sc.src='c17/qrcode.js?v=1';sc.async=true;
+    sc.onload=function(){try{completarMiId();}catch(e){}};
+    document.head.appendChild(sc);
+  }
   function qrSvg(texto){
+    if(typeof window.qrcode!=='function'){cargarQR();return '';}
     try{
       var q=qrcode(0,'M');q.addData(texto);q.make();
       var n=q.getModuleCount(),d='';
@@ -146,7 +163,7 @@
       var cp=document.getElementById('c-copiar');if(cp)cp.remove();
       if(!pasos&&cuenta.querySelector('.mi-id-form')){
         pasos=document.createElement('ol');pasos.className='c-pasos';pasos.id='c-pasos';
-        pasos.innerHTML='<li>Elige un ID de 8 o más letras y números, que solo tú conozcas.</li><li>Tu avance de las tres secciones se guarda en la nube.</li><li>En otro dispositivo entras con el mismo ID y sigues donde te quedaste.</li>';
+        pasos.innerHTML='<li>Elige un ID de 8 a 32 letras y números, que solo tú conozcas.</li><li>Tu avance de las tres secciones se guarda en la nube.</li><li>En otro dispositivo entras con el mismo ID y sigues donde te quedaste.</li>';
         cuenta.appendChild(pasos);
       }
     }

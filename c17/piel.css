@@ -110,7 +110,7 @@ html[data-piel] .fbtn.active{background:var(--c-sup)!important;color:var(--c-tin
 html[data-piel] .fbtn.active small{color:var(--c-sec)!important}
 html[data-piel] .btn svg{stroke-width:1.9}
 html[data-piel] #b-sol{background:color-mix(in srgb,var(--c-sec-t) 85%,transparent)!important;color:color-mix(in srgb,var(--c-sec) 70%,#1C1B22)!important}
-html[data-piel][data-modo="oscuro"] #b-sol{background:color-mix(in srgb,var(--c-sec) 20%,transparent)!important;color:var(--c-sec)!important}
+html[data-piel][data-modo="oscuro"] #b-sol{background:color-mix(in srgb,var(--c-sec) 20%,transparent)!important;color:color-mix(in srgb,var(--c-sec) 55%,#fff)!important}
 
 /* ---------- el tablero: un objeto que flota ---------- */
 html[data-piel] .frame{
@@ -242,7 +242,10 @@ html[data-piel] :focus-visible{outline:2px solid var(--c-sec)!important;outline-
 html[data-piel] .workspace-topbar>div:first-child{min-width:0;flex:1 1 auto}
 @media (max-width:520px){html[data-piel] .workspace-topbar .pc-modo-mini{display:none!important}}
 
-/* ---------- con fondo desenfocado: las superficies se vuelven vidrio ---------- */
+/* ---------- con fondo desenfocado: superficies translúcidas ----------
+   Sin desenfoque en vivo (backdrop-filter) en los elementos pequeños o numerosos:
+   en el teléfono cuesta mucho al procesador gráfico. El fondo ya viene desenfocado,
+   así que un blanco translúcido se ve igual de limpio y es mucho más ligero. */
 html[data-piel][data-fondo] .frame,
 html[data-piel][data-fondo] .panel-card,
 html[data-piel][data-fondo] .status:not(.ok):not(.no):not(.done),
@@ -251,21 +254,18 @@ html[data-piel][data-fondo] #engine-box,
 html[data-piel][data-fondo] .motif,
 html[data-piel][data-fondo] .pc-tablero,
 html[data-piel][data-fondo] .gift-btn,
-html[data-piel][data-fondo] .pcm-boton{
-  background:color-mix(in srgb,var(--c-sup) 72%,transparent)!important;
-  -webkit-backdrop-filter:blur(24px) saturate(170%);backdrop-filter:blur(24px) saturate(170%)
-}
+html[data-piel][data-fondo] .pcm-boton{background:color-mix(in srgb,var(--c-sup) 84%,transparent)!important}
 html[data-piel][data-fondo] .tabs,
-html[data-piel][data-fondo] .pc-modo{background:color-mix(in srgb,var(--c-sup) 45%,transparent)!important;-webkit-backdrop-filter:blur(20px) saturate(170%);backdrop-filter:blur(20px) saturate(170%)}
-html[data-piel][data-fondo] .btn,html[data-piel][data-fondo] .fbtn{background:color-mix(in srgb,var(--c-sup) 55%,transparent)!important;-webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%)}
-html[data-piel][data-fondo] .btn:hover,html[data-piel][data-fondo] .fbtn:hover{background:color-mix(in srgb,var(--c-sup) 75%,transparent)!important}
+html[data-piel][data-fondo] .pc-modo{background:color-mix(in srgb,var(--c-sup) 52%,transparent)!important}
+html[data-piel][data-fondo] .btn,html[data-piel][data-fondo] .fbtn{background:color-mix(in srgb,var(--c-sup) 62%,transparent)!important}
+html[data-piel][data-fondo] .btn:hover,html[data-piel][data-fondo] .fbtn:hover{background:color-mix(in srgb,var(--c-sup) 80%,transparent)!important}
 html[data-piel][data-fondo] .btn.primary,html[data-piel][data-fondo] .btn.btn-anot-on,html[data-piel][data-fondo] #b-anotar[aria-pressed="true"]{background:var(--c-tinta)!important}
 html[data-piel][data-fondo] .fbtn.active{background:var(--c-sup)!important}
 html[data-piel][data-fondo] #b-sol{background:color-mix(in srgb,var(--c-sec-t) 80%,transparent)!important}
 html[data-piel][data-modo="oscuro"][data-fondo] #b-sol{background:color-mix(in srgb,var(--c-sec) 24%,transparent)!important}
 html[data-piel][data-fondo] .frame{box-shadow:0 0 0 .5px var(--c-linea2),0 40px 80px -36px rgba(20,15,60,.45)!important}
 html[data-piel][data-fondo] .workspace-shell{background:transparent!important}
-html[data-piel][data-fondo] .workspace-bg{background:color-mix(in srgb,var(--c-papel) 40%,transparent)!important;-webkit-backdrop-filter:blur(30px) saturate(160%)!important;backdrop-filter:blur(30px) saturate(160%)!important}
+html[data-piel][data-fondo] .workspace-bg{background:color-mix(in srgb,var(--c-papel) 82%,transparent)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 html[data-piel][data-fondo] .workspace-shell .plan-hero-card,html[data-piel][data-fondo] .workspace-shell .plan-stat,html[data-piel][data-fondo] .workspace-shell .error-book,html[data-piel][data-fondo] .workspace-shell .explain-section,html[data-piel][data-fondo] .workspace-shell .explanation-hero,html[data-piel][data-fondo] .workspace-shell .frase-card{background:color-mix(in srgb,var(--c-sup) 80%,transparent)!important}
 
 /* =================== Ronda 2 del árbitro =================== */
@@ -328,7 +328,7 @@ html[data-piel] .c17-barrido{position:absolute;inset:-25%;z-index:6;pointer-even
 @media (prefers-reduced-motion:reduce){html[data-piel] .c17-barrido{display:none}}
 
 /* Aprende Ajedrez: lo que sigue el tema del tablero conserva su color dentro de la piel */
-html[data-piel][data-seccion="aa"] .aa-app{--aa-tema-txt:color-mix(in srgb,var(--acento-tema,#53707F) 82%,var(--c-tinta))}
+html[data-piel][data-seccion="aa"] .aa-app{--aa-tema-txt:color-mix(in srgb,var(--acento-tema,#53707F) 45%,var(--c-tinta))}
 html[data-piel] .aa-fila-nav .btn.aa-nav-lec.aa-listo{
   background:linear-gradient(140deg,color-mix(in srgb,var(--aa-luz) 82%,#fff) 0%,var(--aa-luz) 45%,color-mix(in srgb,var(--aa-luz) 70%,#000) 100%) padding-box,
     conic-gradient(from var(--aa-giro),var(--aa-oro2),var(--aa-oro),color-mix(in srgb,var(--aa-luz) 40%,var(--aa-oro)),#fff,var(--aa-oro),var(--aa-oro2)) border-box!important;
@@ -336,3 +336,18 @@ html[data-piel] .aa-fila-nav .btn.aa-nav-lec.aa-listo{
 html[data-piel] .aa-app .aa-etapa.activa i{color:var(--aa-tema-txt)!important}
 html[data-piel] .aa-app .aa-eyebrow{color:var(--aa-tema-txt)!important}
 html[data-piel] .aa-app .engine-banner-toggle[aria-pressed="true"]{background:color-mix(in srgb,var(--acento-tema,#53707F) 16%,transparent)!important;color:var(--aa-tema-txt)!important}
+
+/* =================== Ronda 3 del árbitro =================== */
+/* etapa activa que ya está hecha: número claro sobre el color del tema */
+html[data-piel] .aa-app .aa-etapa.activa.hecha i{color:var(--aa-tema-ink,#fff)!important}
+/* tamaños mínimos legibles (11–12 px) */
+html[data-piel] .boardhead-left .toplay,html[data-piel] .toplay{font-size:.74rem!important}
+html[data-piel] .boardhead-left .chip,html[data-piel] .chip{font-size:.7rem!important;padding:.16rem .5rem!important}
+html[data-piel] .engine-banner-toggle,html[data-piel] .boardhead-center .engine-banner-toggle{font-size:.72rem!important;padding:.3rem .62rem!important}
+/* chevrones en lugar de triángulos tipográficos */
+html[data-piel] .c17-chev{width:.95em;height:.95em;display:inline-block;vertical-align:-.12em;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+html[data-piel] details.expl summary{list-style:none;display:inline-flex;align-items:center;gap:.35rem;cursor:pointer}
+html[data-piel] details.expl summary::-webkit-details-marker{display:none}
+html[data-piel] details.expl summary:before{content:"";width:.7em;height:.7em;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 5l7 7-7 7' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 5l7 7-7 7' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;transition:transform .3s var(--c-mov)}
+html[data-piel] details.expl[open] summary:before{transform:rotate(90deg)}
+html[data-piel] .chip.F{color:color-mix(in srgb,var(--c-bien) 78%,var(--c-tinta))!important}

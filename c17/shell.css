@@ -270,7 +270,7 @@ html[data-fondo][data-fondo-tono="oscuro"] .mi-id-usuario{background:linear-grad
 html[data-fondo][data-fondo-tono="oscuro"] .mi-id-usuario .mi-id-etq,html[data-fondo][data-fondo-tono="oscuro"] .mi-id-usuario small,html[data-fondo][data-fondo-tono="oscuro"] .c-pase-qr p{color:rgba(255,255,255,.78)!important}
 html[data-fondo][data-fondo-tono="oscuro"] .c-pase-qr p b{color:#fff}
 html[data-fondo][data-fondo-tono="oscuro"] .c-pase-qr{border-top-color:rgba(255,255,255,.22)}
-html[data-fondo] .mi-id-form,html[data-fondo] .c-copiar,html[data-fondo] .mi-id-acciones.dos .mi-id-btn{background:color-mix(in srgb,var(--c-sup) 74%,transparent);-webkit-backdrop-filter:blur(24px) saturate(170%);backdrop-filter:blur(24px) saturate(170%)}
+html[data-fondo] .mi-id-form,html[data-fondo] .c-copiar,html[data-fondo] .mi-id-acciones.dos .mi-id-btn{background:color-mix(in srgb,var(--c-sup) 82%,transparent)}
 
 /* =================== Ronda 2 del árbitro =================== */
 .app-choice[data-app="3"]{--sec-txt:var(--c-aa-t)}

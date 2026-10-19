@@ -55,3 +55,8 @@ html[data-fondo] body{background:transparent!important}
 html[data-fondo] body:before,html[data-fondo] body:after{content:"";position:fixed;inset:0;pointer-events:none}
 html[data-fondo] body:before{z-index:-2;background:var(--c-fondo) center/cover no-repeat;transform:scale(1.04)}
 html[data-fondo] body:after{z-index:-1;background:color-mix(in srgb,var(--c-papel) var(--c-fondo-velo,55%),transparent)}
+
+/* Sobre un fondo, el texto secundario va con más tinta para no perder contraste */
+html[data-fondo][data-modo="claro"]{--c-tinta2:#3E3D47;--c-tinta3:#4A4955}
+html[data-fondo][data-modo="oscuro"]{--c-tinta2:#D4D2E0;--c-tinta3:#BDBBCC}
+html[data-fondo][data-modo="oscuro"] body:before{filter:brightness(.55) saturate(1.2)}
