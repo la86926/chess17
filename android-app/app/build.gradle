@@ -1,0 +1,43 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.luis.pajaritoc'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.luis.chessdel'
+        minSdk 21
+        targetSdk 35
+        versionCode 3
+        versionName '3'
+    }
+
+    def ks = System.getenv('ANDROID_KEYSTORE_FILE')
+
+    signingConfigs {
+        if (ks) {
+            release {
+                storeFile file(ks)
+                storePassword System.getenv('ANDROID_KEYSTORE_PASSWORD')
+                keyAlias System.getenv('ANDROID_KEY_ALIAS')
+                keyPassword System.getenv('ANDROID_KEYSTORE_PASSWORD')
+                enableV1Signing true
+                enableV2Signing true
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            // Con clave fija firma con ella; si no, con la de prueba
+            signingConfig ks ? signingConfigs.release : signingConfigs.debug
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.12.1'
+}
