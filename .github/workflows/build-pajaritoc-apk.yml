@@ -93,7 +93,7 @@ jobs:
           test -f android-app/app/src/main/assets/pc-cloud-sync.css
           test -f android-app/app/src/main/assets/pc-frame-cloud-bridge.js
           test -f android-app/app/src/main/assets/c17/piel.css
-          test -f android-app/app/src/main/assets/c17/fuentes/bricolage.woff2
+          test -f android-app/app/src/main/assets/c17/fuentes/instrument.woff2
           grep -Fq 'android.permission.INTERNET' android-app/app/src/main/AndroidManifest.xml
 
       - name: Build APK
