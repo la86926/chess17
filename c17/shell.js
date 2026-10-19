@@ -1,9 +1,9 @@
 /* ==================================================================
    Chess de L · comportamiento propio del contenedor
-   - Volteo de casillas al cambiar de sección
-   - Avance de cada sección en el menú
+   - Cambio de sección: un velo que nace donde tocaste
+   - Anillos de avance en el menú
    - Píldora del interruptor de apariencia
-   - Mi ID: QR y enlace para abrir el avance en otro dispositivo (?id=)
+   - Mi ID: pase con QR y enlace para abrir el avance en otro dispositivo (?id=)
    - Confirmación antes de recargar la página
    No toca la lógica original: solo la acompaña.
    ================================================================== */
@@ -14,32 +14,32 @@
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function ls(k){try{return localStorage.getItem(k);}catch(e){return null;}}
   function json(k){try{return JSON.parse(ls(k)||'null');}catch(e){return null;}}
+  var LOGO=(document.querySelector('.marca svg')||{}).outerHTML||'';
 
-  /* ---------- volteo de casillas ---------- */
-  var COLOR={'3':['#B6EDD3','#96DDBC'],'1':['#BCD9FF','#9CC5FB'],'2':['#C9BCFF','#B3A2FB'],'id':['#FFEB9E','#F9DC6E']};
+  /* ---------- cambio de sección ---------- */
+  var SEC={
+    '3':{t:'Aprende Ajedrez',s:'218 lecciones en seis niveles',c1:'--c-menta',c2:'--c-cielo'},
+    '1':{t:'Método PC1',s:'1128 ejercicios tácticos',c1:'--c-cielo',c2:'--c-lila'},
+    '2':{t:'Método PC2',s:'1000 ejercicios posicionales',c1:'--c-lila',c2:'--c-rosa'},
+    'id':{t:'Mi ID',s:'Tu avance, en todos tus dispositivos',c1:'--c-mant',c2:'--c-lila'}
+  };
   var pasando=false;
-  function volteo(destino,hecho){
+  function cambio(destino,x,y,hecho){
     if(reduce){hecho();return;}
-    var W=window.innerWidth,H=window.innerHeight;
-    var cols=W<600?6:10,lado=W/cols,filas=Math.ceil(H/lado);
-    var v=document.createElement('div');v.className='c-volteo';v.setAttribute('aria-hidden','true');
-    var c=COLOR[destino]||COLOR['1'];
-    v.style.setProperty('--cols',cols);v.style.setProperty('--v1',c[0]);v.style.setProperty('--v2',c[1]);
-    v.style.gridAutoRows=lado+'px';
-    var h='';
-    for(var f=0;f<filas;f++)for(var k=0;k<cols;k++)h+='<i'+((f+k)%2?' class="o"':'')+' style="--k:'+(f+k)+'"></i>';
-    v.innerHTML=h;document.body.appendChild(v);
-    var max=(filas+cols)*22+340;
-    v.getBoundingClientRect();
+    var d=SEC[destino]||SEC['1'],v=document.createElement('div');
+    var osc=document.documentElement.getAttribute('data-modo')==='oscuro';
+    v.className='c-cambio';v.setAttribute('aria-hidden','true');
+    v.style.setProperty('--x',x+'px');v.style.setProperty('--y',y+'px');
+    v.style.setProperty('--t1',osc?'color-mix(in srgb,var('+d.c1+') 26%,var(--c-papel))':'var('+d.c1+')');
+    v.style.setProperty('--t2',osc?'color-mix(in srgb,var('+d.c2+') 12%,var(--c-papel))':'color-mix(in srgb,var('+d.c2+') 70%,var(--c-papel))');
+    v.innerHTML='<div><b>'+d.t+'</b><small>'+d.s+'</small></div>';
+    document.body.appendChild(v);v.getBoundingClientRect();
     requestAnimationFrame(function(){
-      v.classList.add('cubre');
+      v.classList.add('abre');
       setTimeout(function(){
         hecho();
-        setTimeout(function(){
-          v.classList.remove('cubre');v.classList.add('sale');
-          setTimeout(function(){v.remove();},max+40);
-        },140);
-      },max);
+        setTimeout(function(){v.classList.add('cierra');setTimeout(function(){v.remove();},500);},380);
+      },520);
     });
   }
   /* Solo cuando la persona elige en el menú; los cambios automáticos (la nube, enlaces) siguen al instante. */
@@ -48,33 +48,48 @@
     if(!b||pasando||!backdrop.classList.contains('open'))return;
     if(b.classList.contains('active'))return;
     e.preventDefault();e.stopImmediatePropagation();
+    var r=b.getBoundingClientRect(),x=e.clientX||r.left+30,y=e.clientY||r.top+r.height/2;
     pasando=true;
-    volteo(b.getAttribute('data-app'),function(){pasando=true;b.click();pasando=false;});
+    cambio(b.getAttribute('data-app'),x,y,function(){b.click();pasando=false;});
   },true);
 
-  /* ---------- avance en el menú ---------- */
+  /* ---------- anillos de avance ---------- */
   function contarLista(k){var v=json(k);if(Array.isArray(v))return v.length;if(v&&typeof v==='object')return Object.keys(v).length;return 0;}
   function contarAprende(){
     var p=json('aa_progreso_v1'),l=p&&p.lecciones,n=0;
     if(l)for(var k in l){if(l[k]&&l[k].estado==='completada')n++;}
     return n;
   }
+  function fijar(arco,frac){
+    if(!arco)return;
+    var l=parseFloat(arco.style.getPropertyValue('--l'))||0;
+    /* si ya hay avance, el anillo siempre lo muestra aunque sea poco */
+    var f=frac>0?Math.max(frac,.025):0;
+    arco.style.setProperty('--o',(l*(1-Math.min(1,f))).toFixed(2));
+  }
   function pintarAvance(){
-    var datos={'3':[contarAprende(),218],'1':[contarLista('wp_solved'),1128],'2':[contarLista('wp2_solved'),1000]};
+    var datos={'3':[contarAprende(),218,'aa'],'1':[contarLista('wp_solved'),1128,'pc1'],'2':[contarLista('wp2_solved'),1000,'pc2']};
     for(var app in datos){
-      var el=document.querySelector('.app-choice[data-app="'+app+'"]');if(!el)continue;
-      var hecho=Math.min(datos[app][0],datos[app][1]),total=datos[app][1];
-      var cas=el.querySelectorAll('.ac-casillas i'),llenas=hecho/total*cas.length;
-      for(var i=0;i<cas.length;i++){cas[i].style.setProperty('--k',i);cas[i].style.setProperty('--f',Math.max(0,Math.min(1,llenas-i)).toFixed(3));}
-      var cifra=el.querySelector('.ac-cifra');
-      if(cifra)cifra.textContent=hecho.toLocaleString('es')+' de '+total.toLocaleString('es');
-      el.setAttribute('aria-label',el.querySelector('.ac-nombre').textContent+'. '+hecho+' de '+total+' completados');
+      var hecho=Math.min(datos[app][0],datos[app][1]),total=datos[app][1],frac=hecho/total,id=datos[app][2];
+      var el=document.querySelector('.app-choice[data-app="'+app+'"]');
+      if(el){
+        fijar(el.querySelector('.arco'),frac);
+        el.querySelector('.ac-cifra').textContent=hecho.toLocaleString('es')+' / '+total.toLocaleString('es');
+        el.setAttribute('aria-label',el.querySelector('.ac-nombre').firstChild.textContent+': '+hecho+' de '+total+' completados');
+      }
+      fijar(document.querySelector('.anillos .a-'+id),frac);
+      var pct=document.getElementById('c-p-'+id);
+      if(pct){var p=frac*100;pct.textContent=(p>0&&p<1?'<1':Math.round(p))+' %';}
     }
   }
-  function vaciarAvance(){var c=document.querySelectorAll('.ac-casillas i');for(var i=0;i<c.length;i++)c[i].style.setProperty('--f',0);}
+  function vaciarAvance(){
+    var a=document.querySelectorAll('.anillos .arco');
+    for(var i=0;i<a.length;i++)a[i].style.removeProperty('--o');
+  }
+  pintarAvance();
   new MutationObserver(function(){
     if(backdrop.classList.contains('open'))requestAnimationFrame(function(){requestAnimationFrame(pintarAvance);});
-    else setTimeout(vaciarAvance,300);
+    else setTimeout(vaciarAvance,400);
   }).observe(backdrop,{attributes:true,attributeFilter:['class']});
 
   /* ---------- píldora del interruptor de apariencia ---------- */
@@ -83,50 +98,68 @@
   new MutationObserver(pildora).observe(tema,{subtree:true,attributes:true,attributeFilter:['aria-pressed']});
   pildora();
 
-  /* ---------- Mi ID: QR y enlace ---------- */
+  /* ---------- Mi ID: el pase ---------- */
   var cuenta=document.getElementById('mi-id-cuenta');
-  var ultimoId=null;
   function enlaceDe(id){return WEB+'?id='+encodeURIComponent(id);}
   function qrSvg(texto){
     try{
       var q=qrcode(0,'M');q.addData(texto);q.make();
       var n=q.getModuleCount(),d='';
       for(var r=0;r<n;r++)for(var c=0;c<n;c++)if(q.isDark(r,c))d+='M'+c+' '+r+'h1v1h-1z';
-      return '<svg viewBox="0 0 '+n+' '+n+'" shape-rendering="crispEdges" role="img" aria-label="Código QR de tu ID"><path fill="#1B1730" d="'+d+'"/></svg>';
+      return '<svg viewBox="0 0 '+n+' '+n+'" shape-rendering="crispEdges" role="img" aria-label="Código QR de tu ID"><path fill="#1C1B22" d="'+d+'"/></svg>';
     }catch(e){return '';}
   }
+  var ICON_COPIAR='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2.5"/><path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2"/></svg>';
   function completarMiId(){
     var id=window.PCSync&&window.PCSync.id;
-    var qr=document.getElementById('c-qr'),pasos=document.getElementById('c-pasos');
-    if(id){
+    var pase=cuenta.querySelector('.mi-id-usuario'),pasos=document.getElementById('c-pasos');
+    if(id&&pase){
       if(pasos)pasos.remove();
-      if(qr&&ultimoId===id)return;
-      if(qr)qr.remove();
-      ultimoId=id;
-      var svg=qrSvg(enlaceDe(id));if(!svg)return;
-      var box=document.createElement('section');box.className='c-qr';box.id='c-qr';
-      box.innerHTML='<div class="c-qr-img">'+svg+'</div><div><h2>Sigue en otro dispositivo</h2><p>Escanéalo con la cámara del iPhone o del iPad: tu ID llega escrito y solo tocas «Entrar».</p><button type="button" id="c-qr-copiar">Copiar enlace</button></div>';
-      cuenta.appendChild(box);
-      document.getElementById('c-qr-copiar').onclick=function(){
-        var b=this,url=enlaceDe(id);
-        function listo(){b.textContent='Enlace copiado';setTimeout(function(){b.textContent='Copiar enlace';},1800);}
-        try{navigator.clipboard.writeText(url).then(listo,function(){prompt('Copia este enlace:',url);});}catch(e){prompt('Copia este enlace:',url);}
-      };
-    }else{
-      ultimoId=null;
-      if(qr)qr.remove();
+      var dentro=pase.querySelector(':scope>div');
+      if(dentro&&!dentro.querySelector('.c-pase-cab')){
+        var cab=document.createElement('div');cab.className='c-pase-cab';cab.innerHTML=LOGO+'Chess de L';
+        dentro.insertBefore(cab,dentro.firstChild);
+      }
+      if(dentro&&!dentro.querySelector('.c-pase-qr')){
+        var svg=qrSvg(enlaceDe(id));
+        if(svg){
+          var q=document.createElement('div');q.className='c-pase-qr';
+          q.innerHTML='<div class="c-qr-img">'+svg+'</div><p><b>Sigue en otro dispositivo</b>Escanéalo con la cámara: tu ID llega escrito y solo tocas «Entrar».</p>';
+          dentro.appendChild(q);
+        }
+      }
+      if(!document.getElementById('c-copiar')){
+        var b=document.createElement('button');b.type='button';b.className='c-copiar';b.id='c-copiar';
+        b.innerHTML=ICON_COPIAR+'<span>Copiar enlace de mi ID</span>';
+        b.onclick=function(){
+          var t=b.querySelector('span'),url=enlaceDe(window.PCSync.id);
+          function listo(){t.textContent='Enlace copiado';setTimeout(function(){t.textContent='Copiar enlace de mi ID';},1800);}
+          try{navigator.clipboard.writeText(url).then(listo,function(){prompt('Copia este enlace:',url);});}catch(e){prompt('Copia este enlace:',url);}
+        };
+        cuenta.appendChild(b);
+      }
+    }else if(!id){
+      var cp=document.getElementById('c-copiar');if(cp)cp.remove();
       if(!pasos&&cuenta.querySelector('.mi-id-form')){
         pasos=document.createElement('ol');pasos.className='c-pasos';pasos.id='c-pasos';
-        pasos.innerHTML='<li>Crea un ID que solo tú conozcas, de 8 caracteres o más.</li><li>Tu avance de las tres secciones se guarda en la nube.</li><li>En otro dispositivo, entra con el mismo ID y sigues donde te quedaste.</li>';
+        pasos.innerHTML='<li>Crea un ID que solo tú conozcas, de 8 caracteres o más.</li><li>Tu avance de las tres secciones se guarda en la nube.</li><li>En otro dispositivo entras con el mismo ID y sigues donde te quedaste.</li>';
         cuenta.appendChild(pasos);
       }
     }
   }
   if(cuenta){
     new MutationObserver(function(m){
-      for(var i=0;i<m.length;i++){for(var j=0;j<m[i].addedNodes.length;j++){var n=m[i].addedNodes[j];if(n.id==='c-qr'||n.id==='c-pasos')return;}}
+      for(var i=0;i<m.length;i++){for(var j=0;j<m[i].addedNodes.length;j++){var n=m[i].addedNodes[j];if(n.id==='c-copiar'||n.id==='c-pasos')return;}}
       completarMiId();
     }).observe(cuenta,{childList:true});
+    /* el pase responde al puntero con un brillo sutil */
+    if(!reduce)cuenta.addEventListener('pointermove',function(e){
+      var p=e.target.closest&&e.target.closest('.mi-id-usuario');if(!p)return;
+      var r=p.getBoundingClientRect(),fx=(e.clientX-r.left)/r.width,fy=(e.clientY-r.top)/r.height;
+      p.style.setProperty('--bx',(fx*100).toFixed(1)+'%');p.style.setProperty('--by',(fy*100).toFixed(1)+'%');
+      if(e.pointerType==='mouse'){p.style.setProperty('--ry',((fx-.5)*6).toFixed(2)+'deg');p.style.setProperty('--rx',((.5-fy)*6).toFixed(2)+'deg');}
+    });
+    cuenta.addEventListener('pointerleave',function(){var p=cuenta.querySelector('.mi-id-usuario');if(p){p.style.setProperty('--rx','0deg');p.style.setProperty('--ry','0deg');}},true);
   }
 
   /* Enlace con ?id=: abre Mi ID con el ID ya escrito, listo para «Entrar». */

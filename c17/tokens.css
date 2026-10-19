@@ -1,41 +1,48 @@
 /* ==================================================================
-   Chess de L · tokens del sistema visual «Tecla pastel»
-   Compartidos por el contenedor (index.html) y las tres secciones.
+   Chess de L · tokens del sistema visual «Luz»
+   Elegancia sobria: materiales translúcidos, sombras suaves y
+   los pasteles como tintes delicados. Compartidos por el contenedor
+   (index.html) y las tres secciones.
    ================================================================== */
 :root{
-  --c-fd:'Bricolage',ui-rounded,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --c-ft:'Instrument',system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --c-ft:'Instrument',-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --c-fd:var(--c-ft);
 
-  --c-lila:#C9BCFF;  --c-lila-2:#B3A2FB;
-  --c-menta:#B6EDD3; --c-menta-2:#96DDBC;
-  --c-cielo:#BCD9FF; --c-cielo-2:#9CC5FB;
-  --c-melon:#FFCDB2; --c-melon-2:#FDB792;
-  --c-mant:#FFEB9E;  --c-mant-2:#F9DC6E;
-  --c-rosa:#FFC8DE;
+  /* pasteles de marca */
+  --c-lila:#D9D0FF;  --c-menta:#CBF1DF; --c-cielo:#CFE3FF; --c-mant:#FFF1BF; --c-rosa:#FFD9E6; --c-melon:#FFDCC7;
+  /* tintas de cada sección (texto y anillos) */
+  --c-aa:#2E9E74; --c-pc1:#3B78E0; --c-pc2:#7458E8; --c-id:#C99A12;
 
-  --c-r-s:12px; --c-r-m:16px; --c-r-l:24px; --c-r-xl:30px;
+  --c-r-s:10px; --c-r-m:14px; --c-r-l:22px; --c-r-xl:28px;
   --c-mov:cubic-bezier(.22,1,.36,1);
-  --c-rebote:cubic-bezier(.34,1.56,.64,1);
+  --c-suave:cubic-bezier(.4,0,.2,1);
 }
 html[data-modo="claro"]{
-  --c-papel:#F3F1FA; --c-hondo:#E9E5F6; --c-sup:#FFFFFF; --c-sup2:#F8F7FD;
-  --c-tinta:#1B1730; --c-tinta2:#544E6E; --c-tinta3:#7D7898;
-  --c-linea:rgba(27,23,48,.12); --c-linea2:rgba(27,23,48,.22);
-  --c-borde:#1B1730;                 /* contorno de tecla */
-  --c-tecla:#1B1730;                 /* sombra dura bajo la tecla */
-  --c-violeta:#4B36C8; --c-sobre-violeta:#FFFFFF;
-  --c-bien:#1F8A5B; --c-mal:#C2335A;
-  --c-velo:rgba(27,23,48,.38);
-  --c-sombra:0 24px 60px -28px rgba(43,31,110,.38);
+  color-scheme:light;
+  --c-papel:#F5F5F8; --c-sup:#FFFFFF; --c-sup2:#FAFAFC;
+  --c-relleno:rgba(118,118,138,.12); --c-relleno2:rgba(118,118,138,.18);
+  --c-tinta:#1C1B22; --c-tinta2:#5D5C69; --c-tinta3:#8B8A97;
+  --c-linea:rgba(28,27,34,.08); --c-linea2:rgba(28,27,34,.14);
+  --c-vidrio:rgba(250,250,252,.72);
+  --c-acento:#5B47D6;
+  --c-bien:#1E8A5E; --c-mal:#C23B5E; --c-aviso:#9A7200;
+  --c-velo:rgba(28,27,34,.22);
+  --c-s1:0 1px 1px rgba(30,25,70,.04),0 1px 3px rgba(30,25,70,.06);
+  --c-s2:0 1px 2px rgba(30,25,70,.05),0 8px 24px -10px rgba(40,30,100,.16);
+  --c-s3:0 2px 6px rgba(30,25,70,.05),0 30px 70px -28px rgba(40,30,100,.30);
 }
 html[data-modo="oscuro"]{
-  --c-papel:#17142A; --c-hondo:#110F20; --c-sup:#221E38; --c-sup2:#2B2645;
-  --c-tinta:#F1EEFF; --c-tinta2:#B9B2D8; --c-tinta3:#8E87AE;
-  --c-linea:rgba(241,238,255,.12); --c-linea2:rgba(241,238,255,.24);
-  --c-borde:rgba(241,238,255,.30);
-  --c-tecla:#07060E;
-  --c-violeta:#B7A8FF; --c-sobre-violeta:#17142A;
-  --c-bien:#7FE0B0; --c-mal:#FF8FB0;
-  --c-velo:rgba(5,4,12,.62);
-  --c-sombra:0 28px 70px -26px rgba(0,0,0,.85);
+  color-scheme:dark;
+  --c-papel:#0E0D13; --c-sup:#19181F; --c-sup2:#212029;
+  --c-relleno:rgba(150,148,175,.16); --c-relleno2:rgba(150,148,175,.24);
+  --c-tinta:#F4F3F8; --c-tinta2:#ABA9BA; --c-tinta3:#7E7C90;
+  --c-linea:rgba(255,255,255,.08); --c-linea2:rgba(255,255,255,.14);
+  --c-vidrio:rgba(25,24,31,.72);
+  --c-acento:#B4A6FF;
+  --c-aa:#7FDDB6; --c-pc1:#8DB8FF; --c-pc2:#B9A8FF; --c-id:#F2D27A;
+  --c-bien:#7FDDB6; --c-mal:#FF8EAE; --c-aviso:#F2D27A;
+  --c-velo:rgba(0,0,0,.5);
+  --c-s1:0 1px 2px rgba(0,0,0,.4);
+  --c-s2:0 1px 2px rgba(0,0,0,.4),0 10px 28px -12px rgba(0,0,0,.7);
+  --c-s3:0 2px 8px rgba(0,0,0,.4),0 34px 80px -30px rgba(0,0,0,.85);
 }
