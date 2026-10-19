@@ -37,21 +37,27 @@
     /* cambios seguidos: más breve, para no hacer esperar a quien va y viene */
     var seguido=Date.now()-ultimoCambio<10000;ultimoCambio=Date.now();
     if(seguido)v.classList.add('breve');
-    /* si la sección se abre por primera vez, el velo espera a que termine de cargar */
+    /* si la sección se abre por primera vez, el velo se queda solo hasta que el tablero exista */
     var fr=document.getElementById('app-frame-'+destino),porCargar=!!(fr&&fr.tagName==='IFRAME'&&!fr.getAttribute('src'));
+    if(!porCargar)v.classList.add('sin-titulo');
+    function listo(){
+      try{var w=fr.contentWindow,doc=w&&w.document;
+        return !!(doc&&doc.readyState!=='loading'&&doc.location.href!=='about:blank'&&(w.AAApp||doc.getElementById('board')));
+      }catch(e){return true;}
+    }
     requestAnimationFrame(function(){
       v.classList.add('abre');
       setTimeout(function(){
         hecho();
-        var cerrado=false;
+        var cerrado=false,t0=Date.now();
         function cerrar(){
           if(cerrado)return;cerrado=true;
           v.classList.add('sin-titulo');
-          setTimeout(function(){v.classList.add('cierra');setTimeout(function(){v.remove();},300);},seguido?60:90);
+          setTimeout(function(){v.classList.add('cierra');setTimeout(function(){v.remove();},260);},porCargar?60:0);
         }
-        if(porCargar){fr.addEventListener('load',function(){setTimeout(cerrar,120);},{once:true});setTimeout(cerrar,3500);}
+        if(porCargar){(function mira(){if(cerrado)return;if(listo()||Date.now()-t0>1200)cerrar();else setTimeout(mira,50);})();}
         else cerrar();
-      },seguido?260:300);
+      },seguido?150:190);
     });
   }
   /* Solo cuando la persona elige en el menú; los cambios automáticos (la nube, enlaces) siguen al instante. */
@@ -62,7 +68,7 @@
     e.preventDefault();e.stopImmediatePropagation();
     var r=b.getBoundingClientRect(),x=e.clientX||r.left+30,y=e.clientY||r.top+r.height/2;
     pasando=true;
-    cambio(b.getAttribute('data-app'),x,y,function(){b.click();pasando=false;});
+    cambio(b.getAttribute('data-app'),x,y,function(){b.click();pasando=false;if(window.pcSyncSeccionElegida)window.pcSyncSeccionElegida();});
   },true);
 
   /* ---------- anillos de avance ---------- */
@@ -206,7 +212,7 @@
     var fila=document.getElementById('c-fondos'),nombre=document.getElementById('c-fondo-nombre');
     if(!fila||!window.C17Fondos)return;
     var F=window.C17Fondos,h='<button type="button" class="fondo-op sin" role="radio" data-fondo="ninguno" aria-label="Sin fondo" title="Sin fondo"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><path d="M6.8 17.2L17.2 6.8"/></svg></button>';
-    for(var i=0;i<F.lista.length;i++){var f=F.lista[i];h+='<button type="button" class="fondo-op" role="radio" data-fondo="'+f.id+'" aria-label="'+f.n+'" title="'+f.n+'" style="background-image:url(c17/fondos/'+f.id+'-m.webp)"></button>';}
+    for(var i=0;i<F.lista.length;i++){var f=F.lista[i];h+='<button type="button" class="fondo-op" role="radio" data-fondo="'+f.id+'" aria-label="'+f.n+'" title="'+f.n+'" data-mini="c17/fondos/'+f.id+'-m.webp"></button>';}
     fila.innerHTML=h;
     function marcar(){
       var id=F.leer(),d=F.datos(id),b=fila.querySelectorAll('.fondo-op');
@@ -227,7 +233,10 @@
     });
     marcar();
     var activo=fila.querySelector('[aria-checked="true"]');
-    new MutationObserver(function(){if(backdrop.classList.contains('open')){var a=fila.querySelector('[aria-checked="true"]');if(a)try{a.scrollIntoView({inline:'center',block:'nearest'});}catch(e){}}}).observe(backdrop,{attributes:true,attributeFilter:['class']});
+    /* las miniaturas se piden la primera vez que se abre el menú, no al cargar la página */
+    var minis=false;
+    function cargarMinis(){if(minis)return;minis=true;var b=fila.querySelectorAll('[data-mini]');for(var j=0;j<b.length;j++)b[j].style.backgroundImage='url('+b[j].getAttribute('data-mini')+')';}
+    new MutationObserver(function(){if(backdrop.classList.contains('open')){cargarMinis();var a=fila.querySelector('[aria-checked="true"]');if(a)try{a.scrollIntoView({inline:'center',block:'nearest'});}catch(e){}}}).observe(backdrop,{attributes:true,attributeFilter:['class']});
   })();
 
   /* ---------- teclado: Escape cierra el menú; al abrirlo, el foco va a la sección activa ---------- */

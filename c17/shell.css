@@ -116,10 +116,10 @@ html[data-modo="oscuro"] .tema:before{background:var(--c-relleno2)}
 /* ---------- cambio de sección: un velo que nace donde tocaste ---------- */
 .c-cambio{position:fixed;inset:0;z-index:10500;pointer-events:none;display:grid;place-items:center;
   background:radial-gradient(120% 90% at var(--x) var(--y),var(--t1) 0%,var(--t2) 45%,var(--c-papel) 100%);
-  clip-path:circle(0 at var(--x) var(--y));transition:clip-path .6s var(--c-mov),opacity .42s var(--c-suave)}
+  clip-path:circle(0 at var(--x) var(--y));transition:clip-path .36s var(--c-mov),opacity .26s var(--c-suave)}
 .c-cambio.abre{clip-path:circle(150vmax at var(--x) var(--y))}
 .c-cambio.cierra{opacity:0}
-.c-cambio div{text-align:center;opacity:0;transform:translateY(10px) scale(.98);transition:opacity .45s var(--c-suave) .12s,transform .7s var(--c-mov) .12s}
+.c-cambio div{text-align:center;opacity:0;transform:translateY(10px) scale(.98);transition:opacity .3s var(--c-suave) .08s,transform .45s var(--c-mov) .08s}
 .c-cambio.abre div{opacity:1;transform:none}
 .c-cambio.cierra div{opacity:0;transform:translateY(-8px);transition-delay:0s}
 .c-cambio b{display:block;font-weight:650;font-size:clamp(2.2rem,8vw,3.4rem);letter-spacing:-.04em;line-height:1;color:var(--c-tinta)}
@@ -277,9 +277,9 @@ html[data-fondo] .mi-id-form,html[data-fondo] .c-copiar,html[data-fondo] .mi-id-
 .app-choice[data-app="1"]{--sec-txt:var(--c-pc1-t)}
 .app-choice[data-app="2"]{--sec-txt:var(--c-pc2-t)}
 .ac-nivel{color:var(--sec-txt)}
-.c-cambio.breve{transition:clip-path .42s var(--c-mov),opacity .3s var(--c-suave)}
+.c-cambio.breve{transition:clip-path .3s var(--c-mov),opacity .22s var(--c-suave)}
 .c-cambio.sin-titulo div{opacity:0!important;transform:translateY(-6px)!important;transition:opacity .16s,transform .3s var(--c-mov)!important}
-.c-cambio.cierra{transition:opacity .3s var(--c-suave)}
+.c-cambio.cierra{transition:opacity .24s var(--c-suave)}
 @media(max-width:360px){
   .app-choice{grid-template-columns:30px 1fr;column-gap:10px}
   .ac-icono,.ac-icono svg{width:30px;height:30px}

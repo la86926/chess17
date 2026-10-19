@@ -3,6 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<script>
+/* Carga temprana: la sección que se va a ver empieza a descargarse en cuanto su marco aparece,
+   sin esperar a las hojas de estilo. Misma regla que el menú (más abajo): enlace directo,
+   sección guardada, y si no hay ninguna, Aprende Ajedrez para quien es nuevo de verdad. */
+(function(){
+  try{
+    var a=null,m=/[?&]metodo=([123])(?:&|$)/.exec(location.search);
+    if(m)a=m[1];
+    if(!a){try{a=localStorage.getItem('pc_l3_active_app');}catch(e){}}
+    if(!a){var c=document.cookie.match('(?:^|; )pc_l3_active_app=([^;]*)');a=c?decodeURIComponent(c[1]):null;}
+    if(a!=='1'&&a!=='2'&&a!=='3'){
+      var nuevo=true;
+      try{
+        if(localStorage.getItem('pc_cloud_sync_code_v1'))nuevo=false;
+        ['wp_solved','wp2_solved','wp_hist_log','wp2_hist_log'].forEach(function(k){var v=localStorage.getItem(k);if(v&&v!=='[]'&&v!=='{}'&&v!=='null')nuevo=false;});
+      }catch(e){}
+      a=nuevo?'3':'1';
+    }
+    if(!window.MutationObserver)return;
+    var o=new MutationObserver(function(){
+      var f=document.getElementById('app-frame-'+a);
+      if(!f)return;
+      o.disconnect();
+      /* un instante después, cuando el marco ya está montado del todo */
+      setTimeout(function(){if(!f.getAttribute('src')&&f.dataset.src)f.setAttribute('src',f.dataset.src);},0);
+    });
+    o.observe(document.documentElement,{childList:true,subtree:true});
+    document.addEventListener('DOMContentLoaded',function(){o.disconnect();},{once:true});
+  }catch(e){}
+})();
+</script>
 <meta name="theme-color" content="#F5F5F8">
 <title>Chess de L</title>
 <meta name="description" content="Aprende ajedrez desde cero y entrena con dos métodos de repetición: 1128 ejercicios tácticos y 1000 posicionales.">
@@ -25,11 +56,57 @@
   }catch(e){document.documentElement.setAttribute('data-modo','oscuro');}
 })();
 </script>
+<script id="c17-fondos">
+/* Copia incrustada de c17/fondos.js (el contenedor la necesita antes del primer pintado y así no
+   frena la lectura de la página; las secciones usan el archivo). Si cambia uno, cambiar el otro. */
+/* ==================================================================
+   Chess de L · fondos desenfocados
+   Lo usan el contenedor y las tres secciones. El fondo elegido se
+   guarda en este dispositivo (clave c17_fondo) y se aplica en vivo.
+   ================================================================== */
+(function(){
+  'use strict';
+  var LISTA=[
+    {id:'f12',n:'Nácar',l:.80},
+    {id:'f05',n:'Niebla',l:.83},
+    {id:'f06',n:'Duna',l:.76},
+    {id:'f07',n:'Glaciar',l:.64},
+    {id:'f08',n:'Atardecer',l:.60},
+    {id:'f03',n:'Laguna',l:.63},
+    {id:'f09',n:'Aurora',l:.54},
+    {id:'f01',n:'Crepúsculo',l:.42},
+    {id:'f11',n:'Orquídea',l:.35},
+    {id:'f04',n:'Coral',l:.57},
+    {id:'f02',n:'Abismo',l:.28},
+    {id:'f10',n:'Cordillera',l:.09}
+  ];
+  var CLAVE='c17_fondo',PREDETERMINADO='f12';
+  function leer(){var v=null;try{v=localStorage.getItem(CLAVE);}catch(e){}return v||PREDETERMINADO;}
+  function datos(id){for(var i=0;i<LISTA.length;i++)if(LISTA[i].id===id)return LISTA[i];return null;}
+  function aplicar(){
+    var r=document.documentElement,id=leer(),f=datos(id);
+    if(!f){r.removeAttribute('data-fondo');r.removeAttribute('data-fondo-tono');r.style.removeProperty('--c-fondo');return;}
+    var oscuro=r.getAttribute('data-modo')==='oscuro';
+    /* el velo se ajusta a la luz del fondo para que el texto siempre se lea */
+    /* claro: más velo cuanto más oscuro es el fondo; oscuro: el fondo se oscurece por filtro (conserva su color) y el velo es moderado */
+    var velo=oscuro?Math.min(.72,Math.max(.46,.42+f.l*.3)):Math.min(.82,Math.max(.5,.5+(.85-f.l)*.5));
+    r.setAttribute('data-fondo',id);
+    r.setAttribute('data-fondo-tono',f.l<.5?'oscuro':'claro');
+    var abs;try{abs=new URL('c17/fondos/'+id+'.webp',document.baseURI).href;}catch(e){abs='c17/fondos/'+id+'.webp';}
+    r.style.setProperty('--c-fondo','url("'+abs+'")');
+    r.style.setProperty('--c-fondo-velo',(velo*100).toFixed(0)+'%');
+  }
+  function guardar(id){try{localStorage.setItem(CLAVE,id);}catch(e){}aplicar();}
+  aplicar();
+  new MutationObserver(aplicar).observe(document.documentElement,{attributes:true,attributeFilter:['data-modo']});
+  window.addEventListener('storage',function(e){if(!e||!e.key||e.key===CLAVE)aplicar();});
+  window.C17Fondos={lista:LISTA,leer:leer,datos:datos,guardar:guardar,aplicar:aplicar};
+})();
+</script>
 <link rel="stylesheet" href="pc-cloud-sync.css?v=3">
-<link rel="stylesheet" href="c17/fuentes.css?v=2">
+<link rel="stylesheet" href="c17/fuentes.css?v=3">
 <link rel="stylesheet" href="c17/tokens.css?v=5">
-<link rel="stylesheet" href="c17/shell.css?v=5">
-<script src="c17/fondos.js?v=3"></script>
+<link rel="stylesheet" href="c17/shell.css?v=6">
 </head>
 <body>
 <button class="menu-button c-vidrio" id="menu-button" type="button" aria-label="Abrir menú" aria-expanded="false"><svg class="mb-lado" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="3.5"/><path d="M9.5 4.5v15M5.6 8.2h1.6M5.6 11h1.6"/></svg><svg class="mb-x" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button>
@@ -60,8 +137,8 @@
     </div>
   </aside>
 </div>
-<iframe class="app-frame active" id="app-frame-1" data-src="index1.html?v=c17-7" title="Método PC1 (Avanzado)" allow="autoplay"></iframe>
-<iframe class="app-frame" id="app-frame-2" data-src="index2.html?v=c17-7" title="Método PC2 (Muy avanzado)" allow="autoplay"></iframe>
+<iframe class="app-frame active" id="app-frame-1" data-src="index1.html?v=c17-8" title="Método PC1 (Avanzado)" allow="autoplay"></iframe>
+<iframe class="app-frame" id="app-frame-2" data-src="index2.html?v=c17-8" title="Método PC2 (Muy avanzado)" allow="autoplay"></iframe>
 <!-- Mi ID: crear, entrar, cambiar o salir del ID que sincroniza el avance de las tres secciones -->
 <section class="app-frame mi-id" id="app-frame-id" aria-label="Mi ID"><div class="mi-id-in" id="mi-id">
   <h1>Mi ID</h1>
@@ -69,7 +146,7 @@
   <div class="mi-id-cuenta" id="mi-id-cuenta"></div>
 </div></section>
 <!-- Cada sección se carga la primera vez que se abre: al entrar solo se descarga y prepara la que se va a usar. -->
-<iframe class="app-frame" id="app-frame-3" data-src="index3.html?v=c17-7" title="Aprende Ajedrez" allow="autoplay"></iframe>
+<iframe class="app-frame" id="app-frame-3" data-src="index3.html?v=c17-8" title="Aprende Ajedrez" allow="autoplay"></iframe>
 <script>
 (function(){
   var menuButton=document.getElementById('menu-button');
@@ -132,8 +209,8 @@
   if(guardado==='2'||guardado==='3') selectApp(guardado);
   else if(guardado!=='1'&&!hayAvanceOCodigo()) selectApp('3');
   /* Solo se carga la sección que se va a ver; las demás, la primera vez que se abran. */
-  /* (si la dirección trae un enlace directo a otra sección, se carga esa y no esta) */
-  (function(){var m=/[?&]metodo=([123])(?:&|$)/.exec(location.search);if(m&&m[1]!==activeApp)return;var f=document.getElementById('app-frame-'+activeApp);if(f&&!f.getAttribute('src')&&f.dataset.src)f.setAttribute('src',f.dataset.src);})();
+  /* (si la dirección trae un enlace directo a otra sección, se abre esa y no esta) */
+  (function(){var m=/[?&]metodo=([123])(?:&|$)/.exec(location.search);if(m&&m[1]!==activeApp){selectApp(m[1]);return;}var f=document.getElementById('app-frame-'+activeApp);if(f&&!f.getAttribute('src')&&f.dataset.src)f.setAttribute('src',f.dataset.src);})();
 
   /* ---- apariencia: misma clave que los métodos, así los tres van a una ---- */
   var raiz=document.documentElement, K='pc_modo';
@@ -399,7 +476,7 @@
   </section>
 </div>
 <script src="aa-datos.js?v=20261019-aa56"></script>
-<script type="module" src="pc-cloud-sync.js?v=9"></script>
+<script type="module" src="pc-cloud-sync.js?v=10"></script>
 <script>
 /* ==================================================================
    Tutorial de bienvenida
@@ -666,6 +743,6 @@
   })();
 })();
 </script>
-<script src="c17/shell.js?v=5"></script>
+<script src="c17/shell.js?v=6"></script>
 </body>
 </html>

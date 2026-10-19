@@ -351,3 +351,4 @@ html[data-piel] details.expl summary::-webkit-details-marker{display:none}
 html[data-piel] details.expl summary:before{content:"";width:.7em;height:.7em;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 5l7 7-7 7' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 5l7 7-7 7' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;transition:transform .3s var(--c-mov)}
 html[data-piel] details.expl[open] summary:before{transform:rotate(90deg)}
 html[data-piel] .chip.F{color:color-mix(in srgb,var(--c-bien) 78%,var(--c-tinta))!important}
+html[data-piel] .gift-btn::after{display:none!important}
