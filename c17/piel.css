@@ -333,7 +333,6 @@ html[data-piel] .aa-fila-nav .btn.aa-nav-lec.aa-listo{
   background:linear-gradient(140deg,color-mix(in srgb,var(--aa-luz) 82%,#fff) 0%,var(--aa-luz) 45%,color-mix(in srgb,var(--aa-luz) 70%,#000) 100%) padding-box,
     conic-gradient(from var(--aa-giro),var(--aa-oro2),var(--aa-oro),color-mix(in srgb,var(--aa-luz) 40%,var(--aa-oro)),#fff,var(--aa-oro),var(--aa-oro2)) border-box!important;
   color:#fff!important;border:2.5px solid transparent!important}
-html[data-piel] .aa-btn-voz[aria-pressed="true"]{color:var(--aa-tema-txt)!important}
 html[data-piel] .aa-app .aa-etapa.activa i{color:var(--aa-tema-txt)!important}
 html[data-piel] .aa-app .aa-eyebrow{color:var(--aa-tema-txt)!important}
 html[data-piel] .aa-app .engine-banner-toggle[aria-pressed="true"]{background:color-mix(in srgb,var(--acento-tema,#53707F) 16%,transparent)!important;color:var(--aa-tema-txt)!important}
