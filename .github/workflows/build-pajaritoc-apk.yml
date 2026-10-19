@@ -15,6 +15,7 @@ on:
       - '*.wasm'
       - 'mascotas/**'
       - 'c17/**'
+      - '*.webmanifest'
       - 'android-app/**'
       - '.github/workflows/build-pajaritoc-apk.yml'
   workflow_dispatch:
@@ -80,10 +81,10 @@ jobs:
           cp -f *.mp3 android-app/app/src/main/assets/ || true
           cp -f *.js android-app/app/src/main/assets/ || true
           cp -f *.css android-app/app/src/main/assets/ || true
+          cp -f *.webmanifest android-app/app/src/main/assets/ || true
           cp -f *.wasm android-app/app/src/main/assets/ || true
           cp -R mascotas android-app/app/src/main/assets/
           cp -R c17 android-app/app/src/main/assets/
-          cp c17/logo-512.png android-app/app/src/main/res/drawable/logo_c17.png
           cp torre.png android-app/app/src/main/res/drawable/torre.png
 
       - name: Verify cloud sync assets
@@ -95,6 +96,8 @@ jobs:
           test -f android-app/app/src/main/assets/c17/piel.css
           test -f android-app/app/src/main/assets/c17/fuentes/instrument.woff2
           grep -Fq 'android.permission.INTERNET' android-app/app/src/main/AndroidManifest.xml
+          test -f android-app/app/src/main/res/drawable-xxxhdpi/logo_frente.png
+          test -f android-app/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
 
       - name: Build APK
         working-directory: android-app

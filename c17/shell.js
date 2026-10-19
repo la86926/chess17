@@ -9,7 +9,8 @@
    ================================================================== */
 (function(){
   'use strict';
-  var WEB='https://la86926.github.io/chess17/';
+  /* dirección pública de esta web (cada repositorio la declara en su index.html) */
+  var WEB=document.documentElement.getAttribute('data-web')||'https://la86926.github.io/chess17/';
   var backdrop=document.getElementById('drawer-backdrop');
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function ls(k){try{return localStorage.getItem(k);}catch(e){return null;}}
