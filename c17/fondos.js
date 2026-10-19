@@ -19,7 +19,7 @@
     {id:'f02',n:'Abismo',l:.28},
     {id:'f10',n:'Cordillera',l:.09}
   ];
-  var CLAVE='c17_fondo',PREDETERMINADO='f12';
+  var CLAVE='c17_fondo',PREDETERMINADO='f12',pedido='';
   function leer(){var v=null;try{v=localStorage.getItem(CLAVE);}catch(e){}return v||PREDETERMINADO;}
   function datos(id){for(var i=0;i<LISTA.length;i++)if(LISTA[i].id===id)return LISTA[i];return null;}
   function aplicar(){
@@ -32,6 +32,8 @@
     r.setAttribute('data-fondo',id);
     r.setAttribute('data-fondo-tono',f.l<.5?'oscuro':'claro');
     var abs;try{abs=new URL('c17/fondos/'+id+'.webp',document.baseURI).href;}catch(e){abs='c17/fondos/'+id+'.webp';}
+    /* se pide ya, antes de que el estilo lo descubra, para que el fondo llegue con el primer pintado */
+    if(pedido!==abs){pedido=abs;try{var im=new Image();im.decoding='async';im.src=abs;}catch(e){}}
     r.style.setProperty('--c-fondo','url("'+abs+'")');
     r.style.setProperty('--c-fondo-velo',(velo*100).toFixed(0)+'%');
   }

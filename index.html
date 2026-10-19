@@ -80,7 +80,7 @@
     {id:'f02',n:'Abismo',l:.28},
     {id:'f10',n:'Cordillera',l:.09}
   ];
-  var CLAVE='c17_fondo',PREDETERMINADO='f12';
+  var CLAVE='c17_fondo',PREDETERMINADO='f12',pedido='';
   function leer(){var v=null;try{v=localStorage.getItem(CLAVE);}catch(e){}return v||PREDETERMINADO;}
   function datos(id){for(var i=0;i<LISTA.length;i++)if(LISTA[i].id===id)return LISTA[i];return null;}
   function aplicar(){
@@ -93,6 +93,8 @@
     r.setAttribute('data-fondo',id);
     r.setAttribute('data-fondo-tono',f.l<.5?'oscuro':'claro');
     var abs;try{abs=new URL('c17/fondos/'+id+'.webp',document.baseURI).href;}catch(e){abs='c17/fondos/'+id+'.webp';}
+    /* se pide ya, antes de que el estilo lo descubra, para que el fondo llegue con el primer pintado */
+    if(pedido!==abs){pedido=abs;try{var im=new Image();im.decoding='async';im.src=abs;}catch(e){}}
     r.style.setProperty('--c-fondo','url("'+abs+'")');
     r.style.setProperty('--c-fondo-velo',(velo*100).toFixed(0)+'%');
   }
@@ -137,8 +139,8 @@
     </div>
   </aside>
 </div>
-<iframe class="app-frame active" id="app-frame-1" data-src="index1.html?v=c17-8" title="Método PC1 (Avanzado)" allow="autoplay"></iframe>
-<iframe class="app-frame" id="app-frame-2" data-src="index2.html?v=c17-8" title="Método PC2 (Muy avanzado)" allow="autoplay"></iframe>
+<iframe class="app-frame active" id="app-frame-1" data-src="index1.html?v=c17-9" title="Método PC1 (Avanzado)" allow="autoplay"></iframe>
+<iframe class="app-frame" id="app-frame-2" data-src="index2.html?v=c17-9" title="Método PC2 (Muy avanzado)" allow="autoplay"></iframe>
 <!-- Mi ID: crear, entrar, cambiar o salir del ID que sincroniza el avance de las tres secciones -->
 <section class="app-frame mi-id" id="app-frame-id" aria-label="Mi ID"><div class="mi-id-in" id="mi-id">
   <h1>Mi ID</h1>
@@ -146,7 +148,7 @@
   <div class="mi-id-cuenta" id="mi-id-cuenta"></div>
 </div></section>
 <!-- Cada sección se carga la primera vez que se abre: al entrar solo se descarga y prepara la que se va a usar. -->
-<iframe class="app-frame" id="app-frame-3" data-src="index3.html?v=c17-8" title="Aprende Ajedrez" allow="autoplay"></iframe>
+<iframe class="app-frame" id="app-frame-3" data-src="index3.html?v=c17-9" title="Aprende Ajedrez" allow="autoplay"></iframe>
 <script>
 (function(){
   var menuButton=document.getElementById('menu-button');
@@ -206,11 +208,13 @@
     }catch(e){}
     return false;
   }
-  if(guardado==='2'||guardado==='3') selectApp(guardado);
+  /* Un enlace directo (?metodo=1|2|3) manda: se abre esa sección y ninguna otra se descarga. */
+  var enlaceMetodo=/[?&]metodo=([123])(?:&|$)/.exec(location.search);
+  if(enlaceMetodo) selectApp(enlaceMetodo[1]);
+  else if(guardado==='2'||guardado==='3') selectApp(guardado);
   else if(guardado!=='1'&&!hayAvanceOCodigo()) selectApp('3');
   /* Solo se carga la sección que se va a ver; las demás, la primera vez que se abran. */
-  /* (si la dirección trae un enlace directo a otra sección, se abre esa y no esta) */
-  (function(){var m=/[?&]metodo=([123])(?:&|$)/.exec(location.search);if(m&&m[1]!==activeApp){selectApp(m[1]);return;}var f=document.getElementById('app-frame-'+activeApp);if(f&&!f.getAttribute('src')&&f.dataset.src)f.setAttribute('src',f.dataset.src);})();
+  (function(){var f=document.getElementById('app-frame-'+activeApp);if(f&&!f.getAttribute('src')&&f.dataset.src)f.setAttribute('src',f.dataset.src);})();
 
   /* ---- apariencia: misma clave que los métodos, así los tres van a una ---- */
   var raiz=document.documentElement, K='pc_modo';
@@ -475,7 +479,7 @@
     </div>
   </section>
 </div>
-<script src="aa-datos.js?v=20261019-aa56"></script>
+<script src="aa-datos.js?v=20261019-aa58"></script>
 <script type="module" src="pc-cloud-sync.js?v=10"></script>
 <script>
 /* ==================================================================
@@ -743,6 +747,6 @@
   })();
 })();
 </script>
-<script src="c17/shell.js?v=6"></script>
+<script src="c17/shell.js?v=7"></script>
 </body>
 </html>

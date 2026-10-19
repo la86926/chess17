@@ -42,7 +42,9 @@
     if(!porCargar)v.classList.add('sin-titulo');
     function listo(){
       try{var w=fr.contentWindow,doc=w&&w.document;
-        return !!(doc&&doc.readyState!=='loading'&&doc.location.href!=='about:blank'&&(w.AAApp||doc.getElementById('board')));
+        if(!doc||doc.readyState==='loading'||doc.location.href==='about:blank')return false;
+        /* Aprende Ajedrez trae un tablero estático en su HTML: está lista solo cuando su app terminó de arrancar */
+        return destino==='3'?!!(w.AAApp&&w.AAApp.listo):!!doc.getElementById('board');
       }catch(e){return true;}
     }
     requestAnimationFrame(function(){
@@ -55,7 +57,7 @@
           v.classList.add('sin-titulo');
           setTimeout(function(){v.classList.add('cierra');setTimeout(function(){v.remove();},260);},porCargar?60:0);
         }
-        if(porCargar){(function mira(){if(cerrado)return;if(listo()||Date.now()-t0>1200)cerrar();else setTimeout(mira,50);})();}
+        if(porCargar){(function mira(){if(cerrado)return;if(listo()||Date.now()-t0>2500)cerrar();else setTimeout(mira,50);})();}
         else cerrar();
       },seguido?150:190);
     });
