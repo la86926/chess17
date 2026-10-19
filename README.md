@@ -1,0 +1,25 @@
+# Chess de L
+
+Aprende ajedrez desde cero y entrena con dos métodos de repetición.
+
+- **Aprende Ajedrez**: 218 lecciones en seis niveles.
+- **Método PC1** (Avanzado): 1128 ejercicios tácticos.
+- **Método PC2** (Muy avanzado): 1000 ejercicios posicionales.
+- **Mi ID**: guarda el avance en la nube y lo abre en otro dispositivo (también con un código QR).
+
+Web: https://la86926.github.io/chess17/
+
+## Cómo está hecho
+
+Las tres secciones y la sincronización son las mismas de `la86926/chess` (misma nube de Firebase).
+El diseño nuevo vive en `c17/`:
+
+| Archivo | Para qué sirve |
+|---|---|
+| `c17/tokens.css` | Colores, tipografías y radios del sistema visual |
+| `c17/shell.css`, `c17/shell.js` | Menú, cambio de sección, Mi ID con QR, tutorial |
+| `c17/piel.css`, `c17/piel.js` | Piel que se aplica dentro de PC1, PC2 y Aprende Ajedrez |
+| `c17/fuentes/` | Bricolage Grotesque e Instrument Sans (licencia OFL), servidas desde el repo |
+| `c17/qrcode.js` | Generador de QR de Kazuhiko Arase (licencia MIT) |
+
+La app Android se compila sola con GitHub Actions y queda en *Releases* como `ChessDeL17.apk`.

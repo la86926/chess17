@@ -245,3 +245,4 @@ html[data-piel] .aa-tour-acc .aa-tour-cerrar{background:transparent!important;bo
 /* ---------- explicación: etiquetas ---------- */
 html[data-piel] .explain-chips span,html[data-piel] .explain-chips .chip,html[data-piel] .explain-chips>*{border:1.5px solid var(--c-linea2)!important;background:var(--c-sup2)!important;color:var(--c-tinta)!important;border-radius:999px!important;font-family:var(--c-ft)!important;letter-spacing:0!important;text-transform:none!important}
 html[data-piel] .explanation-hero:before,html[data-piel] .explanation-hero:after,html[data-piel] .plan-hero-card:before,html[data-piel] .plan-hero-card:after{display:none!important}
+html[data-piel],html[data-piel] body{overscroll-behavior-y:none}

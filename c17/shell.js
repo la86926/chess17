@@ -149,7 +149,7 @@
 
   /* ---------- antes de recargar: avisar ---------- */
   window.addEventListener('beforeunload',function(e){
-    if(window.__c17SinAviso)return;
+    if(window.__c17SinAviso||location.hostname==='appassets.androidplatform.net')return;
     e.preventDefault();e.returnValue='';return '';
   });
 })();

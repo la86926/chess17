@@ -226,3 +226,4 @@ html[data-modo="oscuro"] .app-choice.active{border-color:var(--loseta)}
   *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important}
   .tuto-mano{animation-duration:3s!important;animation-iteration-count:infinite!important}
 }
+html,body{overscroll-behavior:none}

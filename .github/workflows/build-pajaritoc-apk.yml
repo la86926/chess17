@@ -14,6 +14,7 @@ on:
       - '*.css'
       - '*.wasm'
       - 'mascotas/**'
+      - 'c17/**'
       - 'android-app/**'
       - '.github/workflows/build-pajaritoc-apk.yml'
   workflow_dispatch:
@@ -81,6 +82,8 @@ jobs:
           cp -f *.css android-app/app/src/main/assets/ || true
           cp -f *.wasm android-app/app/src/main/assets/ || true
           cp -R mascotas android-app/app/src/main/assets/
+          cp -R c17 android-app/app/src/main/assets/
+          cp c17/logo-512.png android-app/app/src/main/res/drawable/logo_c17.png
           cp torre.png android-app/app/src/main/res/drawable/torre.png
 
       - name: Verify cloud sync assets
@@ -89,6 +92,8 @@ jobs:
           test -f android-app/app/src/main/assets/mascotas/corgi-3.webp
           test -f android-app/app/src/main/assets/pc-cloud-sync.css
           test -f android-app/app/src/main/assets/pc-frame-cloud-bridge.js
+          test -f android-app/app/src/main/assets/c17/piel.css
+          test -f android-app/app/src/main/assets/c17/fuentes/bricolage.woff2
           grep -Fq 'android.permission.INTERNET' android-app/app/src/main/AndroidManifest.xml
 
       - name: Build APK
@@ -111,14 +116,14 @@ jobs:
         run: |
           APK=android-app/app/build/outputs/apk/release/app-release.apk
           test -s "$APK"
-          $ANDROID_HOME/build-tools/35.0.0/aapt dump badging "$APK" | grep -F "package: name='com.luis.chessdel'"
+          $ANDROID_HOME/build-tools/35.0.0/aapt dump badging "$APK" | grep -F "package: name='com.luis.chess17'"
           $ANDROID_HOME/build-tools/35.0.0/apksigner verify --verbose "$APK"
-          cp "$APK" ChessDeL.apk
+          cp "$APK" ChessDeL17.apk
 
       - uses: actions/upload-artifact@v4
         with:
-          name: ChessDeL
-          path: ChessDeL.apk
+          name: ChessDeL17
+          path: ChessDeL17.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -127,7 +132,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release delete apk-latest --yes --cleanup-tag || true
-          gh release create apk-latest ChessDeL.apk \
+          gh release create apk-latest ChessDeL17.apk \
             --title "Chess de L — APK" \
             --notes "APK listo para instalar en Android. Se actualiza solo con cada cambio." \
             --latest
