@@ -243,3 +243,53 @@ html[data-modo="oscuro"] .mi-id-btn[data-modo="crear"]{background:color-mix(in s
   .tuto-mano{animation-duration:3s!important;animation-iteration-count:infinite!important}
 }
 .drawer.c-vidrio{background:color-mix(in srgb,var(--c-papel) 88%,transparent)}
+
+/* ---------- fondo del contenedor (se ve en Mi ID) ---------- */
+html[data-fondo] .mi-id{background:transparent}
+.c-fondo{display:none}
+
+/* ---------- selector de fondo ---------- */
+.fondos-grupo{padding:12px 12px 13px}
+.fondos-cab{display:flex;align-items:baseline;justify-content:space-between;padding:0 3px 10px}
+.fondos-cab b{font-weight:620;font-size:1rem;letter-spacing:-.012em}
+.fondos-cab span{font-size:.8rem;color:var(--c-tinta3)}
+.fondos-fila{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:4px 3px;margin:-4px -3px;scroll-snap-type:x proximity}
+.fondos-fila::-webkit-scrollbar{display:none}
+.fondo-op{flex:0 0 44px;width:44px;height:44px;padding:0;border:0;border-radius:13px;cursor:pointer;scroll-snap-align:start;background:var(--c-papel) center/cover no-repeat;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.12);transition:transform .3s var(--c-mov),box-shadow .25s}
+.fondo-op:active{transform:scale(.92)}
+.fondo-op[aria-checked="true"]{box-shadow:inset 0 0 0 .5px rgba(0,0,0,.12),0 0 0 2px var(--c-sup),0 0 0 4px var(--c-tinta)}
+.fondo-op.sin{display:grid;place-items:center;background:var(--c-relleno);color:var(--c-tinta3)}
+.fondo-op.sin svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
+.fondo-op:focus-visible{outline:2px solid var(--c-acento);outline-offset:3px}
+
+/* el velo de cambio y el pase usan el fondo elegido */
+html[data-fondo] .c-cambio{background:linear-gradient(color-mix(in srgb,var(--c-papel) 30%,transparent),color-mix(in srgb,var(--c-papel) 30%,transparent)),var(--c-fondo) center/cover no-repeat}
+html[data-fondo][data-fondo-tono="oscuro"][data-modo="claro"] .c-cambio{background:linear-gradient(color-mix(in srgb,var(--c-papel) 55%,transparent),color-mix(in srgb,var(--c-papel) 55%,transparent)),var(--c-fondo) center/cover no-repeat}
+html[data-fondo] .mi-id-usuario{background:linear-gradient(rgba(255,255,255,.34),rgba(255,255,255,.18)),var(--c-fondo) center/cover no-repeat}
+html[data-fondo][data-fondo-tono="oscuro"] .mi-id-usuario{background:linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.22)),var(--c-fondo) center/cover no-repeat;color:#fff}
+html[data-fondo][data-fondo-tono="oscuro"] .mi-id-usuario .mi-id-etq,html[data-fondo][data-fondo-tono="oscuro"] .mi-id-usuario small,html[data-fondo][data-fondo-tono="oscuro"] .c-pase-qr p{color:rgba(255,255,255,.78)!important}
+html[data-fondo][data-fondo-tono="oscuro"] .c-pase-qr p b{color:#fff}
+html[data-fondo][data-fondo-tono="oscuro"] .c-pase-qr{border-top-color:rgba(255,255,255,.22)}
+html[data-fondo] .mi-id-form,html[data-fondo] .c-copiar,html[data-fondo] .mi-id-acciones.dos .mi-id-btn{background:color-mix(in srgb,var(--c-sup) 74%,transparent);-webkit-backdrop-filter:blur(24px) saturate(170%);backdrop-filter:blur(24px) saturate(170%)}
+
+/* =================== Ronda 2 del árbitro =================== */
+.app-choice[data-app="3"]{--sec-txt:var(--c-aa-t)}
+.app-choice[data-app="1"]{--sec-txt:var(--c-pc1-t)}
+.app-choice[data-app="2"]{--sec-txt:var(--c-pc2-t)}
+.ac-nivel{color:var(--sec-txt)}
+.c-cambio.breve{transition:clip-path .42s var(--c-mov),opacity .3s var(--c-suave)}
+.c-cambio.sin-titulo div{opacity:0!important;transform:translateY(-6px)!important;transition:opacity .16s,transform .3s var(--c-mov)!important}
+.c-cambio.cierra{transition:opacity .3s var(--c-suave)}
+@media(max-width:360px){
+  .app-choice{grid-template-columns:30px 1fr;column-gap:10px}
+  .ac-icono,.ac-icono svg{width:30px;height:30px}
+  .ac-nombre{flex-wrap:wrap;gap:0 6px}
+  .ac-cifra{display:none}
+  .anillos{gap:12px;padding:14px}.anillos svg{width:72px;height:72px;flex-basis:72px}
+}
+.mi-id-in{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
+.mi-id-btn[data-modo="crear"]{background:var(--c-relleno)!important;color:var(--c-tinta)!important}
+html[data-fondo] .mi-id-btn[data-modo="crear"]{background:color-mix(in srgb,var(--c-sup) 70%,transparent)!important}
+.mi-id-form .mi-id-btn[data-id-accion="cambiar"]{background:transparent!important;color:var(--c-acento-t);font-weight:600}
+.mi-id-form .mi-id-btn[data-id-accion="cambiar"]:hover{text-decoration:underline;text-underline-offset:3px}
+.drawer-tuto{color:var(--c-acento-t)}

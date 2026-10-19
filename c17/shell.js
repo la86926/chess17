@@ -18,12 +18,12 @@
 
   /* ---------- cambio de sección ---------- */
   var SEC={
-    '3':{t:'Aprende Ajedrez',s:'218 lecciones en seis niveles',c1:'--c-menta',c2:'--c-cielo'},
-    '1':{t:'Método PC1',s:'1128 ejercicios tácticos',c1:'--c-cielo',c2:'--c-lila'},
-    '2':{t:'Método PC2',s:'1000 ejercicios posicionales',c1:'--c-lila',c2:'--c-rosa'},
+    '3':{t:'Aprende Ajedrez',s:'Desde la primera jugada',c1:'--c-menta',c2:'--c-cielo'},
+    '1':{t:'Método PC1',s:'Táctica hasta que salga sola',c1:'--c-cielo',c2:'--c-lila'},
+    '2':{t:'Método PC2',s:'Pensar como un maestro',c1:'--c-lila',c2:'--c-rosa'},
     'id':{t:'Mi ID',s:'Tu avance, en todos tus dispositivos',c1:'--c-mant',c2:'--c-lila'}
   };
-  var pasando=false;
+  var pasando=false,ultimoCambio=0;
   function cambio(destino,x,y,hecho){
     if(reduce){hecho();return;}
     var d=SEC[destino]||SEC['1'],v=document.createElement('div');
@@ -34,12 +34,16 @@
     v.style.setProperty('--t2',osc?'color-mix(in srgb,var('+d.c2+') 12%,var(--c-papel))':'color-mix(in srgb,var('+d.c2+') 70%,var(--c-papel))');
     v.innerHTML='<div><b>'+d.t+'</b><small>'+d.s+'</small></div>';
     document.body.appendChild(v);v.getBoundingClientRect();
+    /* cambios seguidos: más breve, para no hacer esperar a quien va y viene */
+    var seguido=Date.now()-ultimoCambio<10000;ultimoCambio=Date.now();
+    if(seguido)v.classList.add('breve');
     requestAnimationFrame(function(){
       v.classList.add('abre');
       setTimeout(function(){
         hecho();
-        setTimeout(function(){v.classList.add('cierra');setTimeout(function(){v.remove();},500);},380);
-      },520);
+        v.classList.add('sin-titulo');
+        setTimeout(function(){v.classList.add('cierra');setTimeout(function(){v.remove();},320);},seguido?60:140);
+      },seguido?260:380);
     });
   }
   /* Solo cuando la persona elige en el menú; los cambios automáticos (la nube, enlaces) siguen al instante. */
@@ -142,7 +146,7 @@
       var cp=document.getElementById('c-copiar');if(cp)cp.remove();
       if(!pasos&&cuenta.querySelector('.mi-id-form')){
         pasos=document.createElement('ol');pasos.className='c-pasos';pasos.id='c-pasos';
-        pasos.innerHTML='<li>Crea un ID que solo tú conozcas, de 8 caracteres o más.</li><li>Tu avance de las tres secciones se guarda en la nube.</li><li>En otro dispositivo entras con el mismo ID y sigues donde te quedaste.</li>';
+        pasos.innerHTML='<li>Elige un ID de 8 o más letras y números, que solo tú conozcas.</li><li>Tu avance de las tres secciones se guarda en la nube.</li><li>En otro dispositivo entras con el mismo ID y sigues donde te quedaste.</li>';
         cuenta.appendChild(pasos);
       }
     }
@@ -179,6 +183,43 @@
       },120);
     })();
   })();
+
+  /* ---------- selector de fondo ---------- */
+  (function(){
+    var fila=document.getElementById('c-fondos'),nombre=document.getElementById('c-fondo-nombre');
+    if(!fila||!window.C17Fondos)return;
+    var F=window.C17Fondos,h='<button type="button" class="fondo-op sin" role="radio" data-fondo="ninguno" aria-label="Sin fondo" title="Sin fondo"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><path d="M6.8 17.2L17.2 6.8"/></svg></button>';
+    for(var i=0;i<F.lista.length;i++){var f=F.lista[i];h+='<button type="button" class="fondo-op" role="radio" data-fondo="'+f.id+'" aria-label="'+f.n+'" title="'+f.n+'" style="background-image:url(c17/fondos/'+f.id+'-m.webp)"></button>';}
+    fila.innerHTML=h;
+    function marcar(){
+      var id=F.leer(),d=F.datos(id),b=fila.querySelectorAll('.fondo-op');
+      for(var j=0;j<b.length;j++){var on=b[j].getAttribute('data-fondo')===(d?id:'ninguno');b[j].setAttribute('aria-checked',on?'true':'false');b[j].tabIndex=on?0:-1;}
+      nombre.textContent=d?d.n:'Sin fondo';
+    }
+    fila.addEventListener('click',function(e){
+      var b=e.target.closest('.fondo-op');if(!b)return;
+      F.guardar(b.getAttribute('data-fondo'));marcar();
+      /* las secciones abiertas cambian al instante */
+      var fr=document.querySelectorAll('iframe.app-frame');
+      for(var k=0;k<fr.length;k++){try{var w=fr[k].contentWindow;if(w&&w.C17Fondos)w.C17Fondos.aplicar();}catch(err){}}
+    });
+    fila.addEventListener('keydown',function(e){
+      if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;
+      var b=[].slice.call(fila.querySelectorAll('.fondo-op')),i=b.indexOf(document.activeElement);if(i<0)return;
+      var n=b[(i+(e.key==='ArrowRight'?1:b.length-1))%b.length];n.focus();n.click();e.preventDefault();
+    });
+    marcar();
+    var activo=fila.querySelector('[aria-checked="true"]');
+    new MutationObserver(function(){if(backdrop.classList.contains('open')){var a=fila.querySelector('[aria-checked="true"]');if(a)try{a.scrollIntoView({inline:'center',block:'nearest'});}catch(e){}}}).observe(backdrop,{attributes:true,attributeFilter:['class']});
+  })();
+
+  /* ---------- teclado: Escape cierra el menú; al abrirlo, el foco va a la sección activa ---------- */
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&backdrop.classList.contains('open')){var mb=document.getElementById('menu-button');mb.click();mb.focus();}
+  });
+  new MutationObserver(function(){
+    if(backdrop.classList.contains('open'))setTimeout(function(){var a=document.querySelector('.drawer .app-choice.active')||document.querySelector('.drawer .app-choice');if(a)try{a.focus({preventScroll:true});}catch(e){}},80);
+  }).observe(backdrop,{attributes:true,attributeFilter:['class']});
 
   /* ---------- antes de recargar: avisar ---------- */
   window.addEventListener('beforeunload',function(e){

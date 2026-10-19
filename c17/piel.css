@@ -241,3 +241,88 @@ html[data-piel] :focus-visible{outline:2px solid var(--c-sec)!important;outline-
 }
 html[data-piel] .workspace-topbar>div:first-child{min-width:0;flex:1 1 auto}
 @media (max-width:520px){html[data-piel] .workspace-topbar .pc-modo-mini{display:none!important}}
+
+/* ---------- con fondo desenfocado: las superficies se vuelven vidrio ---------- */
+html[data-piel][data-fondo] .frame,
+html[data-piel][data-fondo] .panel-card,
+html[data-piel][data-fondo] .status:not(.ok):not(.no):not(.done),
+html[data-piel][data-fondo] .moves,
+html[data-piel][data-fondo] #engine-box,
+html[data-piel][data-fondo] .motif,
+html[data-piel][data-fondo] .pc-tablero,
+html[data-piel][data-fondo] .gift-btn,
+html[data-piel][data-fondo] .pcm-boton{
+  background:color-mix(in srgb,var(--c-sup) 72%,transparent)!important;
+  -webkit-backdrop-filter:blur(24px) saturate(170%);backdrop-filter:blur(24px) saturate(170%)
+}
+html[data-piel][data-fondo] .tabs,
+html[data-piel][data-fondo] .pc-modo{background:color-mix(in srgb,var(--c-sup) 45%,transparent)!important;-webkit-backdrop-filter:blur(20px) saturate(170%);backdrop-filter:blur(20px) saturate(170%)}
+html[data-piel][data-fondo] .btn,html[data-piel][data-fondo] .fbtn{background:color-mix(in srgb,var(--c-sup) 55%,transparent)!important;-webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%)}
+html[data-piel][data-fondo] .btn:hover,html[data-piel][data-fondo] .fbtn:hover{background:color-mix(in srgb,var(--c-sup) 75%,transparent)!important}
+html[data-piel][data-fondo] .btn.primary,html[data-piel][data-fondo] .btn.btn-anot-on,html[data-piel][data-fondo] #b-anotar[aria-pressed="true"]{background:var(--c-tinta)!important}
+html[data-piel][data-fondo] .fbtn.active{background:var(--c-sup)!important}
+html[data-piel][data-fondo] #b-sol{background:color-mix(in srgb,var(--c-sec-t) 80%,transparent)!important}
+html[data-piel][data-modo="oscuro"][data-fondo] #b-sol{background:color-mix(in srgb,var(--c-sec) 24%,transparent)!important}
+html[data-piel][data-fondo] .frame{box-shadow:0 0 0 .5px var(--c-linea2),0 40px 80px -36px rgba(20,15,60,.45)!important}
+html[data-piel][data-fondo] .workspace-shell{background:transparent!important}
+html[data-piel][data-fondo] .workspace-bg{background:color-mix(in srgb,var(--c-papel) 40%,transparent)!important;-webkit-backdrop-filter:blur(30px) saturate(160%)!important;backdrop-filter:blur(30px) saturate(160%)!important}
+html[data-piel][data-fondo] .workspace-shell .plan-hero-card,html[data-piel][data-fondo] .workspace-shell .plan-stat,html[data-piel][data-fondo] .workspace-shell .error-book,html[data-piel][data-fondo] .workspace-shell .explain-section,html[data-piel][data-fondo] .workspace-shell .explanation-hero,html[data-piel][data-fondo] .workspace-shell .frase-card{background:color-mix(in srgb,var(--c-sup) 80%,transparent)!important}
+
+/* =================== Ronda 2 del árbitro =================== */
+/* tinta de texto de cada sección (contraste AA); --c-sec queda para trazos y anillos */
+html[data-piel][data-seccion="pc1"]{--c-sec-txt:var(--c-pc1-t)}
+html[data-piel][data-seccion="pc2"]{--c-sec-txt:var(--c-pc2-t)}
+html[data-piel][data-seccion="aa"]{--c-sec-txt:var(--c-aa-t)}
+html[data-piel][data-modo="claro"],html[data-piel][data-modo="oscuro"]{--crest:var(--c-sec-txt);--gold:var(--c-sec-txt);--acento-txt:var(--c-sec-txt)}
+html[data-piel] .fbtn.active small,html[data-piel] .reading h2 .k,html[data-piel] details.expl summary,
+html[data-piel] .workspace-eyebrow,html[data-piel] .frase-eyebrow,html[data-piel] .text-action,html[data-piel] .aa-tour-paso{color:var(--c-sec-txt)!important}
+
+/* error en el tablero: siempre rojo, nunca el color de la sección */
+html[data-piel] .sq.bad{animation:c17Mal .45s ease!important}
+@keyframes c17Mal{0%{box-shadow:inset 0 0 0 0 transparent}20%{box-shadow:inset 0 0 0 999px color-mix(in srgb,var(--c-mal) 42%,transparent);transform:translateX(-2px)}45%{transform:translateX(2px)}70%{transform:translateX(-1px)}100%{box-shadow:inset 0 0 0 0 transparent;transform:none}}
+html[data-piel] .pc-hex.mal{box-shadow:0 0 0 1px var(--c-mal),0 0 0 4px color-mix(in srgb,var(--c-mal) 18%,transparent)!important}
+html[data-piel] .pc-pista.mal{color:var(--c-mal)!important}
+
+/* sin mayúsculas de imprenta ni espaciado tipo máquina de escribir */
+html[data-piel] *{text-transform:none!important}
+html[data-piel] .aa-eyebrow,html[data-piel] .pc-tema b,html[data-piel] .pc-hexrow span,html[data-piel] .pc-hex,html[data-piel] .pc-nombre-row span,
+html[data-piel] .wordmark small,html[data-piel] .plan-stat>span,html[data-piel] .aa-fav-txt small,html[data-piel] .aa-fv-leccion span,
+html[data-piel] .aa-nivel-cuenta,html[data-piel] .aa-fl-num{letter-spacing:0!important;font-family:var(--c-ft)!important}
+html[data-piel] .aa-eyebrow{font-size:.8rem!important;font-weight:600;color:var(--c-sec-txt)!important}
+html[data-piel] .pc-tema b{font-size:.78rem!important;font-weight:550!important;color:var(--c-tinta2)!important}
+html[data-piel] .aa-nivel-n{font-family:var(--c-ft)!important;font-weight:650!important;letter-spacing:-.015em}
+
+/* iconos que sustituyen emojis y glifos */
+html[data-piel] .c17-ico{width:1.05em;height:1.05em;display:inline-block;vertical-align:-.16em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+html[data-piel] .modal-x svg,html[data-piel] .pc-io-close svg,html[data-piel] .workspace-close svg,html[data-piel] .pc-buscar-x svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+html[data-piel] .card-icon{font-size:0!important;color:var(--c-sec-txt)!important;background:color-mix(in srgb,var(--c-sec-t) 70%,transparent)!important;border-radius:11px!important}
+html[data-piel][data-modo="oscuro"] .card-icon{background:color-mix(in srgb,var(--c-sec) 18%,transparent)!important}
+html[data-piel] .card-icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+html[data-piel] .pc-float-toggle{border:0!important;border-radius:12px!important;background:var(--c-relleno)!important;color:var(--c-tinta)!important;font-family:var(--c-ft)!important;font-weight:580!important;box-shadow:none!important}
+html[data-piel] .pc-float-toggle[aria-pressed="true"]{background:var(--c-tinta)!important;color:var(--c-papel)!important}
+html[data-piel] .pc-float-toggle svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+html[data-piel] .status .ico{display:inline-grid;place-items:center;width:20px;height:20px}
+html[data-piel] .status .ico svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+html[data-piel] .gift-btn svg{width:21px;height:21px;fill:none;stroke:var(--c-tinta);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* modo oscuro: sin verdes oscuros en Aprende Ajedrez */
+html[data-piel][data-modo="oscuro"] body{background:var(--c-papel) radial-gradient(70% 380px at 50% -120px,color-mix(in srgb,var(--c-acento) 12%,transparent),transparent) no-repeat}
+html[data-piel][data-modo="oscuro"] .frame{box-shadow:0 0 0 .5px var(--c-linea2),0 40px 90px -40px rgba(0,0,0,.9)!important}
+html[data-piel][data-modo="oscuro"][data-seccion="aa"]{--c-sec-t:var(--c-cielo)}
+html[data-piel] #b-sol:disabled,html[data-piel] .btn.aa-btn-sol:disabled{background:var(--c-relleno)!important;color:var(--c-tinta2)!important}
+
+/* piezas que se levantan al arrastrarlas */
+html[data-piel] .sq .pc.drag{transform:scale(1.08)!important;filter:drop-shadow(0 10px 12px rgba(20,15,60,.35));transition:transform .12s var(--c-mov)}
+@media (hover:hover){html[data-piel] .sq:hover{box-shadow:inset 0 0 0 999px rgba(255,255,255,.08)}}
+
+/* pestañas con indicador que se desliza */
+html[data-piel] .tabs.c17-desliza{position:relative}
+html[data-piel] .tabs.c17-desliza .tab.active{background:transparent!important;box-shadow:none!important}
+html[data-piel] .tabs.c17-desliza .tab{position:relative;z-index:1}
+html[data-piel] .c17-pildora{position:absolute;z-index:0;top:3px;bottom:3px;left:0;border-radius:8px;background:var(--c-sup);box-shadow:0 0 0 .5px var(--c-linea),0 3px 8px rgba(20,20,40,.12);transition:transform .45s var(--c-mov),width .45s var(--c-mov);pointer-events:none}
+html[data-piel][data-modo="oscuro"] .c17-pildora{background:var(--c-relleno2)}
+
+/* al resolver: una franja de luz cruza el tablero */
+html[data-piel] .c17-barrido{position:absolute;inset:-25%;z-index:6;pointer-events:none;background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.6) 50%,transparent 62%);transform:translateX(-85%);animation:c17Luz 1.15s var(--c-mov) forwards}
+@keyframes c17Luz{to{transform:translateX(85%)}}
+@media (prefers-reduced-motion:reduce){html[data-piel] .c17-barrido{display:none}}

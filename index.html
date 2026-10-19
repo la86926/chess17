@@ -27,8 +27,9 @@
 </script>
 <link rel="stylesheet" href="pc-cloud-sync.css?v=3">
 <link rel="stylesheet" href="c17/fuentes.css?v=2">
-<link rel="stylesheet" href="c17/tokens.css?v=2">
-<link rel="stylesheet" href="c17/shell.css?v=2">
+<link rel="stylesheet" href="c17/tokens.css?v=4">
+<link rel="stylesheet" href="c17/shell.css?v=4">
+<script src="c17/fondos.js?v=2"></script>
 </head>
 <body>
 <button class="menu-button c-vidrio" id="menu-button" type="button" aria-label="Abrir menú" aria-expanded="false"><svg class="mb-lado" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="3.5"/><path d="M9.5 4.5v15M5.6 8.2h1.6M5.6 11h1.6"/></svg><svg class="mb-x" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button>
@@ -45,6 +46,10 @@
     <div class="grupo">
       <button class="app-choice app-choice-id" data-app="id" type="button"><span class="ac-icono" aria-hidden="true"><span><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4.2"/><path d="M11 12l8.5-8.5M16.5 6.5l2.5 2.5M14 9l2 2"/></svg></span></span><span class="ac-txt"><span class="ac-nombre">Mi ID</span><small id="mi-id-sub">Crea tu ID y sincroniza tus dispositivos</small></span><span></span></button>
     </div>
+    <div class="grupo fondos-grupo">
+      <div class="fondos-cab"><b>Fondo</b><span id="c-fondo-nombre"></span></div>
+      <div class="fondos-fila" id="c-fondos" role="radiogroup" aria-label="Fondo"></div>
+    </div>
     <div class="drawer-pie">
       <div class="tema" id="tema" role="group" aria-label="Apariencia">
         <button type="button" data-modo="claro" aria-pressed="false" title="Claro" aria-label="Apariencia: Claro"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.1"/><path d="M12 3.2v2.1M12 18.7v2.1M3.2 12h2.1M18.7 12h2.1M5.9 5.9l1.5 1.5M16.6 16.6l1.5 1.5M18.1 5.9l-1.5 1.5M7.4 16.6l-1.5 1.5"/></svg><span class="sr">Claro</span></button>
@@ -55,8 +60,8 @@
     </div>
   </aside>
 </div>
-<iframe class="app-frame active" id="app-frame-1" src="index1.html?v=c17-2" title="Método PC1 (Avanzado)" allow="autoplay"></iframe>
-<iframe class="app-frame" id="app-frame-2" src="index2.html?v=c17-2" title="Método PC2 (Muy avanzado)" allow="autoplay"></iframe>
+<iframe class="app-frame active" id="app-frame-1" src="index1.html?v=c17-4" title="Método PC1 (Avanzado)" allow="autoplay"></iframe>
+<iframe class="app-frame" id="app-frame-2" src="index2.html?v=c17-4" title="Método PC2 (Muy avanzado)" allow="autoplay"></iframe>
 <!-- Mi ID: crear, entrar, cambiar o salir del ID que sincroniza el avance de las tres secciones -->
 <section class="app-frame mi-id" id="app-frame-id" aria-label="Mi ID"><div class="mi-id-in" id="mi-id">
   <h1>Mi ID</h1>
@@ -64,7 +69,7 @@
   <div class="mi-id-cuenta" id="mi-id-cuenta"></div>
 </div></section>
 <!-- Aprende Ajedrez se carga la primera vez que se abre (así PC1 y PC2 no tardan más en abrir). -->
-<iframe class="app-frame" id="app-frame-3" data-src="index3.html?v=c17-2" title="Aprende Ajedrez" allow="autoplay"></iframe>
+<iframe class="app-frame" id="app-frame-3" data-src="index3.html?v=c17-4" title="Aprende Ajedrez" allow="autoplay"></iframe>
 <script>
 (function(){
   var menuButton=document.getElementById('menu-button');
@@ -384,7 +389,7 @@
     <p id="tuto-texto"></p>
     <div class="tuto-puntos" id="tuto-puntos"></div>
     <div class="tuto-acciones">
-      <button class="tuto-cerrar" id="tuto-cerrar" type="button">Cerrar tutorial</button>
+      <button class="tuto-cerrar" id="tuto-cerrar" type="button">Saltar</button>
       <button class="tuto-atras" id="tuto-atras" type="button">Atrás</button>
       <button class="tuto-sig" id="tuto-sig" type="button">Siguiente</button>
     </div>
@@ -416,7 +421,7 @@
   var abierto=false,paso=0,reloj=null,vigia=null,estable=0;
 
   var PASOS_PC=[
-    {titulo:'Hola, esto es Chess de L',texto:'Lecciones para empezar y dos métodos para entrenar, en una sola app. En menos de un minuto te enseño qué tocar.',modo:'saludo'},
+    {titulo:'Chess de L',texto:'Lecciones para empezar y dos métodos para entrenar, en una sola app. En menos de un minuto te enseño qué tocar.',modo:'saludo'},
     {titulo:'Elige tu método',texto:'Este botón abre el menú. Ahí cambias entre Aprende Ajedrez (lecciones por niveles), el Método PC1 (Avanzado: ejercicios tácticos) y el Método PC2 (Muy avanzado: ejercicios posicionales), y ves cuánto llevas de cada uno.',padre:'menu-button',modo:'toque'},
     {titulo:'¿Quién juega?',texto:'Aquí ves el número del ejercicio, su dificultad y qué bando mueve: «Juegan: Blancas» o «Juegan: Negras».',app:'toplay',modo:'toque'},
     {titulo:'Juega sobre el tablero',texto:'Toca una de tus piezas y arrástrala, o toca la casilla de destino. Si es la jugada correcta, el rival responde solo.',app:'board',modo:'arrastre'},
@@ -430,9 +435,9 @@
   ];
   /* Recorrido de Aprende Ajedrez (la primera sección): se usa cuando es la sección abierta. */
   var PASOS_AA=[
-    {titulo:'Bienvenido a Aprende Ajedrez',texto:'Aquí aprendes ajedrez desde cero. Cuando estés listo, el Método PC1 (Avanzado) y el Método PC2 (Muy avanzado) te esperan en el menú.',modo:'saludo'},
+    {titulo:'Aprende Ajedrez',texto:'Ajedrez desde la primera jugada. Cuando estés listo, el Método PC1 (Avanzado) y el Método PC2 (Muy avanzado) te esperan en el menú.',modo:'saludo'},
     {titulo:'El menú',texto:'Con este botón abres el menú y cambias entre Aprende Ajedrez, el Método PC1 (Avanzado) y el Método PC2 (Muy avanzado).',padre:'menu-button',modo:'toque'},
-    {titulo:'Tus pestañas',texto:'«Temario» reúne todas las lecciones, «Mis favoritos» guarda lo que marques con el corazón, «Repaso» te propone posiciones de lo que ya estudiaste para encontrar la jugada, y el botón de la carita, a la derecha, cambia tu mascota. Siempre quedan arriba, aunque bajes por la página.',app:'tabs',modo:'toque'},
+    {titulo:'Tus pestañas',texto:'«Temario» reúne las lecciones, «Mis favoritos» guarda lo que marques con el corazón y «Repaso» te propone posiciones de lo ya estudiado. La carita de la derecha cambia tu mascota.',app:'tabs',modo:'toque'},
     {titulo:'El temario',texto:'Toca un nivel para desplegar sus lecciones y toca una lección para abrirla. Cada lección avanza por pasos numerados: exploras, ves la demostración y resuelves en el tablero.',app:'aa-niveles',modo:'toque'},
     {titulo:'Continuar donde me quedé',texto:'Este botón te lleva directo a la lección y a la etapa donde te quedaste.',app:'aa-continuar-aprendiendo',modo:'toque'},
     {titulo:'Mi ID',texto:'En el menú, «Mi ID» guarda tu avance en la nube. En otro dispositivo entras con el mismo ID, o escaneas su código QR, y recuperas todo.',padre:'menu-button',modo:'toque'},
@@ -540,7 +545,7 @@
     try{var f=frameActivo(),d=f&&f.contentDocument;if(d&&d.documentElement)col=getComputedStyle(d.documentElement).getPropertyValue('--dark').trim();}catch(e){}
     if(luz(col)==null)col=CIELO;
     var L=luz(col);
-    var fa=frameActivo(),tono={'app-frame-3':'var(--c-aa)','app-frame-1':'var(--c-pc1)','app-frame-2':'var(--c-pc2)'}[fa&&fa.id]||'var(--c-acento)';
+    var fa=frameActivo(),tono={'app-frame-3':'var(--c-aa-t)','app-frame-1':'var(--c-pc1-t)','app-frame-2':'var(--c-pc2-t)'}[fa&&fa.id]||'var(--c-acento-t)';
     raiz.style.setProperty('--tuto-acento',tono);
     raiz.style.setProperty('--tuto-acento-txt',tono);
   }
@@ -659,6 +664,6 @@
 })();
 </script>
 <script src="c17/qrcode.js?v=1"></script>
-<script src="c17/shell.js?v=2"></script>
+<script src="c17/shell.js?v=4"></script>
 </body>
 </html>

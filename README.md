@@ -19,7 +19,8 @@ El diseño nuevo vive en `c17/`:
 | `c17/tokens.css` | Colores, tipografías y radios del sistema visual |
 | `c17/shell.css`, `c17/shell.js` | Menú, cambio de sección, Mi ID con QR, tutorial |
 | `c17/piel.css`, `c17/piel.js` | Piel que se aplica dentro de PC1, PC2 y Aprende Ajedrez |
-| `c17/fuentes/` | Bricolage Grotesque e Instrument Sans (licencia OFL), servidas desde el repo |
+| `c17/fuentes/` | Instrument Sans (licencia OFL), servidas desde el repo |
+| `c17/fondos/`, `c17/fondos.js` | Fondos desenfocados elegibles desde el menú |
 | `c17/qrcode.js` | Generador de QR de Kazuhiko Arase (licencia MIT) |
 
 La app Android se compila sola con GitHub Actions y queda en *Releases* como `ChessDeL17.apk`.
