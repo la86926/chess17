@@ -5,7 +5,7 @@ Aprende ajedrez desde cero y entrena con dos métodos de repetición.
 - **Aprende Ajedrez**: 218 lecciones en seis niveles.
 - **Método PC1** (Avanzado): 1128 ejercicios tácticos.
 - **Método PC2** (Muy avanzado): 1000 ejercicios posicionales.
-- **Finales de peones (avanzado)**: 32 posiciones reales de ocho partidas magistrales publicadas, agrupadas en ocho familias estratégicas (aislado, colgantes, Carlsbad, Francesa, Erizo, India de rey, Benoni y Maróczy). Conserva los controles, animaciones, tutor, pistas, partidas, historial, favoritos, sonidos y sincronización de Aprende Ajedrez. Las nuevas lecciones usan identificadores `S1-001` a `S8-004` para no mezclar sus resultados con el antiguo temario básico.
+- **Finales de peones — rey y peones avanzado:** 8 bloques y 32 problemas de cálculo (zugzwang, triangulación, casillas conjugadas, rupturas, pasados alejados, estudios de Réti, tablas por ahogado y carreras). Cada uno tiene tres ejercicios en tableros originales/reflejados/colores rotados, total 96; sin piezas mayores o menores. Las referencias son teóricas y las líneas de aprendizaje son ilustrativas y comprobadas como legales. Identificadores `E1-001` a `E8-004`, distintos de los temarios históricos.
 - **Mi ID**: guarda el avance en la nube y lo abre en otro dispositivo (también con un código QR).
 
 Web: https://la86926.github.io/chess17/
