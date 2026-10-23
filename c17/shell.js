@@ -82,6 +82,11 @@
     if(l)for(var k in l){if(l[k]&&l[k].estado==='completada')n++;}
     return n;
   }
+  function contarFinales(){
+    var p=json('aa_finales_progreso_v1'),l=p&&p.lecciones,n=0;
+    if(l)for(var k in l)if(/^F[1-8]-00[1-4]$/.test(k)&&l[k]&&l[k].estado==='completada')n++;
+    return Math.max(n,contarLista('aa_finales_peones_v1'));
+  }
   function fijar(arco,frac){
     if(!arco)return;
     var l=parseFloat(arco.style.getPropertyValue('--l'))||0;
@@ -90,7 +95,7 @@
     arco.style.setProperty('--o',(l*(1-Math.min(1,f))).toFixed(2));
   }
   function pintarAvance(){
-    var datos={'3':[contarAprende(),218,'aa'],'1':[contarLista('wp_solved'),1128,'pc1'],'2':[contarLista('wp2_solved'),1000,'pc2'],'4':[contarLista('aa_finales_peones_v1'),32,'fin']};
+    var datos={'3':[contarAprende(),218,'aa'],'1':[contarLista('wp_solved'),1128,'pc1'],'2':[contarLista('wp2_solved'),1000,'pc2'],'4':[contarFinales(),32,'fin']};
     for(var app in datos){
       var hecho=Math.min(datos[app][0],datos[app][1]),total=datos[app][1],frac=hecho/total,id=datos[app][2];
       var el=document.querySelector('.app-choice[data-app="'+app+'"]');
