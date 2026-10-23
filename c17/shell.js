@@ -84,7 +84,7 @@
   }
   function contarFinales(){
     var p=json('aa_finales_progreso_v1'),l=p&&p.lecciones,n=0;
-    if(l)for(var k in l)if(/^S[1-8]-00[1-4]$/.test(k)&&l[k]&&l[k].estado==='completada')n++;
+    if(l)for(var k in l)if(/^E[1-8]-00[1-4]$/.test(k)&&l[k]&&l[k].estado==='completada')n++;
     return n;
   }
   function fijar(arco,frac){
