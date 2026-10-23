@@ -304,6 +304,37 @@ function comoEjercicio(t,id){
 var ejercicioActual=PUZZLES[0];
 curr=function(){return ejercicioActual;};
 
+/* Títulos de Finales: detectar realmente el desbordamiento a tamaño normal.
+   Solo los títulos que no caben se compactan en móviles. La medición usa el
+   ancho disponible del título, no una longitud arbitraria de caracteres. */
+var aaLienzoTitulo=null,aaAjusteTituloPendiente=false;
+function ajustarTituloFinales(){
+  aaAjusteTituloPendiente=false;
+  var titulo=el('aa-titulo');if(!titulo)return;
+  titulo.classList.remove('aa-titulo-largo');
+  if(!window.matchMedia||!window.matchMedia('(max-width: 600px)').matches)return;
+  var disponible=titulo.clientWidth;
+  if(disponible<20)return; /* otra pestaña todavía oculta */
+  var estilo=window.getComputedStyle(titulo);
+  if(!aaLienzoTitulo)aaLienzoTitulo=document.createElement('canvas').getContext('2d');
+  if(!aaLienzoTitulo)return;
+  aaLienzoTitulo.font=estilo.font||[estilo.fontWeight,estilo.fontSize,estilo.fontFamily].join(' ');
+  var contenido=titulo.textContent||'';
+  var ancho=aaLienzoTitulo.measureText(contenido).width;
+  var espacio=parseFloat(estilo.letterSpacing);
+  if(Number.isFinite(espacio))ancho+=Math.max(0,contenido.length-1)*espacio;
+  if(ancho>disponible+1)titulo.classList.add('aa-titulo-largo');
+}
+function prepararAjusteTituloFinales(){
+  if(aaAjusteTituloPendiente)return;
+  aaAjusteTituloPendiente=true;
+  requestAnimationFrame(ajustarTituloFinales);
+}
+window.addEventListener('resize',prepararAjusteTituloFinales);
+if(window.ResizeObserver){
+  new ResizeObserver(prepararAjusteTituloFinales).observe(el('aa-titulo').parentElement);
+}
+
 /* Cabecera: «NIVEL DOS · LECCIÓN 4» + título + corazón */
 renderHead=function(){
   if(A.modo==='descubre'){
@@ -318,6 +349,7 @@ renderHead=function(){
     chip.textContent=est==='completada'?'Completada':est==='iniciada'?'En curso':tieneContenido(A.id)?'Por empezar':'En preparación';
     chip.className='chip '+(est==='completada'?'F':est==='iniciada'?'I':'A');
   }
+  prepararAjusteTituloFinales();
   el('toplay').innerHTML=A.modo==='descubre'||A.tarea?('Juegan: <b>'+(state.orient==='w'?'Blancas':'Negras')+'</b>'):('Mueven: <b>'+(ladoDe(state.game&&state.game.fen())==='w'?'Blancas':'Negras')+'</b>');
   el('exno').textContent=A.id||'';
   actualizarCorazon();
