@@ -5,14 +5,15 @@ Aprende ajedrez desde cero y entrena con dos métodos de repetición.
 - **Aprende Ajedrez**: 218 lecciones en seis niveles.
 - **Método PC1** (Avanzado): 1128 ejercicios tácticos.
 - **Método PC2** (Muy avanzado): 1000 ejercicios posicionales.
+- **Finales de peones**: 32 casos en ocho familias con tablero interactivo, explicaciones y progreso local.
 - **Mi ID**: guarda el avance en la nube y lo abre en otro dispositivo (también con un código QR).
 
 Web: https://la86926.github.io/chess17/
 
 ## Cómo está hecho
 
-Las tres secciones y la sincronización son las mismas de `la86926/chess` (misma nube de Firebase).
-El diseño nuevo vive en `c17/`:
+Las secciones originales y la sincronización son las mismas de `la86926/chess` (misma nube de Firebase).
+El nuevo laboratorio vive en `index4.html` y reutiliza el sistema visual de `c17/`:
 
 | Archivo | Para qué sirve |
 |---|---|
