@@ -1055,13 +1055,28 @@ function irLeccionRelativa(delta,soloConContenido){
 }
 go=function(delta){if(A.modo==='descubre'){siguienteDescubre();return;}irLeccionRelativa(delta);};
 jumpToNumber=function(n){abrirLeccion(String(n));};
+/* Navegación del teclado exclusiva de Finales de peones.
+   Reutiliza exactamente la acción de los controles de la lección,
+   así recorre Descubre, cada fotograma de Observa, Comprende y ejercicios.
+   No captura ↑/↓: continúan disponibles para desplazar la página. */
 document.addEventListener('keydown',function(e){
-  if(e.target&&/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;
-  if(document.querySelector('.aa-fv-fondo.open'))return;
+  if(e.isComposing||e.altKey||e.ctrlKey||e.metaKey||e.shiftKey)return;
+  var t=e.target;
+  if(t&&((/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))||t.isContentEditable))return;
+  if(t&&t.closest&&t.closest('[role="slider"],[role="listbox"],[role="menu"],[role="radiogroup"]'))return;
+  if(document.querySelector('.aa-fv-fondo.open,.workspace-bg.open,.modal-bg.open,.confirm-bg.open,.gift-bg.open,.pc-temas-bg.open,.pc-favs-bg.open,.pc-perso-bg.open,.pc-conf-bg.open'))return;
+  if(typeof pilaFondos!=='undefined'&&pilaFondos.length)return;
   if(!el('v-train').classList.contains('active'))return;
-  if(A.modo==='leccion'&&A.etapa==='observa'&&(e.key==='ArrowRight'||e.key==='ArrowLeft')){
-    e.preventDefault();e.stopImmediatePropagation();pararDemo();irPasoDemo(A.paso+(e.key==='ArrowRight'?1:-1));
-  }else if(e.key===' '&&enLeccionConContenido()&&!(e.target&&e.target.closest&&e.target.closest('button'))){e.preventDefault();e.stopImmediatePropagation();el('aa-pausa').click();}
+  if(A.modo==='leccion'&&enLeccionConContenido()&&(e.key==='ArrowRight'||e.key==='ArrowLeft')){
+    e.preventDefault();
+    e.stopImmediatePropagation(); /* impide que el código base salte de lección */
+    var boton=el(e.key==='ArrowRight'?'aa-adelante':'aa-atras');
+    if(boton&&!boton.disabled)boton.click();
+    return;
+  }
+  if(e.key===' '&&enLeccionConContenido()&&!(t&&t.closest&&t.closest('button'))){
+    e.preventDefault();e.stopImmediatePropagation();el('aa-pausa').click();
+  }
 },true);
 
 /* Compartir: imagen del tablero + enlace directo a la lección */
