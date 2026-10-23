@@ -5,7 +5,7 @@ Aprende ajedrez desde cero y entrena con dos métodos de repetición.
 - **Aprende Ajedrez**: 218 lecciones en seis niveles.
 - **Método PC1** (Avanzado): 1128 ejercicios tácticos.
 - **Método PC2** (Muy avanzado): 1000 ejercicios posicionales.
-- **Finales de peones**: 32 casos en ocho familias con tablero interactivo, explicaciones y progreso local.
+- **Finales de peones**: 32 casos en ocho familias con etapas Descubre, Observa, Comprende, Practica y Comprueba. Incluye movimientos animados, prácticas sin cuestionarios, el mismo tablero de Aprende Ajedrez y desplazamiento vertical propio.
 - **Mi ID**: guarda el avance en la nube y lo abre en otro dispositivo (también con un código QR).
 
 Web: https://la86926.github.io/chess17/
