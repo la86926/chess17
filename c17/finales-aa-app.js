@@ -269,12 +269,9 @@ function tutor(texto,tono){
   var nuevas=casillasDelTexto(texto),cambio=String(texto)!==A.mencionTexto;
   if(cambio)A.latido=null;
   A.menciones=nuevas;A.mencionTexto=String(texto);if(cambio)A.mencionT=Date.now();pintarMenciones(cambio);
-  /* Mientras el ejercicio no esté resuelto, debajo de cada mensaje (acierto parcial, error o pista)
-     se repite lo que hay que hacer, para no perder la consigna. */
-  var recordar=(A.consigna&&A.tarea&&!A.resuelta&&plano(texto)!==plano(A.consigna))?'<span class="aa-consigna">'+rico(A.consigna)+'</span>':'';
-  tutorTexto.innerHTML=conCasillas(rico(texto)+recordar);
-  /* el globo tiene siempre 4 renglones (los botones no se mueven): si el recordatorio no cabe, se omite */
-  if(recordar&&tutorTexto.scrollHeight>tutorTexto.clientHeight+2)tutorTexto.innerHTML=conCasillas(rico(texto));
+  /* En Finales, cada paso muestra solo SU explicación. No anexar consignas
+     antiguas ni duplicar las instrucciones al mostrar una pista o evaluación. */
+  tutorTexto.innerHTML=conCasillas(rico(texto));
   tutorTexto.scrollTop=0;
   tutorCaja.dataset.tono=tono||'';
   tutorCaja.classList.remove('habla');void tutorCaja.offsetWidth;tutorCaja.classList.add('habla');
@@ -472,6 +469,17 @@ window.addEventListener('storage',function(e){
 function abrirLeccion(id,opc){
   opc=opc||{};
   if(!catalogoDe(id))id=CAT.lista[0].id;
+  /* Al cambiar de lección, vaciar el historial visible del tutor y todos los
+     textos/recordatorios temporales antes de mostrar la nueva posición. */
+  if(A.id!==id){
+    dichos.length=0;
+    A.consigna=null;A.mencionTexto='';A.menciones=[];
+    A.latido=null;A.paso=0;A.demo=null;A.sencillo=false;
+    clearTimeout(A.vistoT);clearTimeout(A.revelar);
+    var completo=el('ref-full');if(completo)completo.replaceChildren();
+    tutorTexto.replaceChildren();tutorTexto.scrollTop=0;
+    limpiarCapa();
+  }
   pararDemo();
   /* cada lección empieza reproduciéndose sola; si solo se sigue a otro dispositivo, queda en pausa
      (así dos pantallas abiertas a la vez no avanzan cada una por su cuenta). Con la pausa permanente,
