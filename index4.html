@@ -8069,22 +8069,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <script src="pc-compartir.js?v=3"></script>
 <script src="c17/finales-aa-lecciones.js?v=2"></script>
 <script src="c17/finales-aa-datos.js?v=1"></script>
-<script>
-/* Convertir ejercicios resueltos de las versiones anteriores sin borrar avances. */
-(function(){
- try{
-  var old=JSON.parse(localStorage.getItem('aa_finales_peones_v1')||'{}');
-  if(!old||typeof old!=='object')return;
-  var D=window.AADatos;
-  for(var i=1;i<=32;i++){
-   if(!old[i])continue;
-   var group=Math.floor((i-1)/4)+1,item=(i-1)%4+1,id='F'+group+'-'+('00'+item).slice(-3);
-   if(D.leer(D.CLAVES.progreso).lecciones[id]&&D.leer(D.CLAVES.progreso).lecciones[id].estado==='completada')continue;
-   D.actualizarLeccion(id,function(r){r.estado='completada';r.completadaEn=Date.now();r.etapa='comprueba';r.etapasHechas=['descubre','observa:0','observa:1','observa:2','observa:3','comprende','practica','hazlo','comprueba'];r.aciertos=Math.max(r.aciertos,1);});
-  }
- }catch(e){}
-})();
-</script>
+<!-- Temario avanzado S1–S8: el avance F del temario básico queda archivado,
+     no se vuelve a importar ni se computa como resolución de una posición nueva. -->
 <script src="c17/finales-aa-app.js?v=3"></script>
 <script src="pc-mascota.js?v=20"></script>
 </body>
