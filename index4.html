@@ -9,7 +9,7 @@
 <link rel="preload" href="aa-app.css?v=20261019-aa64" as="style">
 <link rel="preload" href="c17/finales-aa-lecciones.js?v=3" as="script">
 <link rel="preload" href="c17/finales-aa-datos.js?v=1" as="script">
-<link rel="preload" href="c17/finales-aa-app.js?v=3" as="script">
+<link rel="preload" href="c17/finales-aa-app.js?v=4" as="script">
 <link rel="preload" href="pc-compartir.js?v=3" as="script">
 <link rel="preload" href="pc-mascota.js?v=20" as="script">
 <script id="pc-backup-preload">
@@ -2006,6 +2006,36 @@ header.topbar.topbar-anim{overflow:hidden}
 <link rel="stylesheet" href="c17/fuentes.css?v=3">
 <link rel="stylesheet" href="c17/tokens.css?v=7">
 <link rel="stylesheet" href="c17/piel.css?v=15">
+<style id="finales-cabeceras-adaptables">
+/* Exclusivo de Finales de peones: permitir como máximo dos líneas completas
+   en el título sin alterar el diseño global de Aprende Ajedrez. */
+.aa-app #aa-titulo{
+  white-space:normal!important;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  line-clamp:2;
+  max-width:100%;
+  min-width:0;
+  overflow:hidden;
+  overflow-wrap:break-word;
+  text-overflow:clip;
+  text-wrap:balance;
+}
+/* Un título corto conserva la tipografía original. Un título que se desborda
+   en móviles se muestra a ~la mitad de tamaño; dos renglones conservan la
+   misma altura total que uno de tamaño normal. */
+@media(max-width:600px){
+  .aa-app #aa-titulo.aa-titulo-largo{
+    font-size:clamp(.5rem,2.25vw,.68rem)!important;
+    line-height:1.06!important;
+    height:clamp(1.2075rem,5.29vw,1.61rem);
+    max-height:clamp(1.2075rem,5.29vw,1.61rem);
+    min-height:0;
+    letter-spacing:0;
+  }
+}
+</style>
 <script src="c17/piel.js?v=8" defer></script>
 <script src="c17/fondos.js?v=5"></script>
 </head>
@@ -8071,7 +8101,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <script src="c17/finales-aa-datos.js?v=1"></script>
 <!-- Temario avanzado S1–S8: el avance F del temario básico queda archivado,
      no se vuelve a importar ni se computa como resolución de una posición nueva. -->
-<script src="c17/finales-aa-app.js?v=3"></script>
+<script src="c17/finales-aa-app.js?v=4"></script>
 <script src="pc-mascota.js?v=20"></script>
 </body>
 </html>
