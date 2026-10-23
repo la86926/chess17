@@ -304,3 +304,24 @@ html[data-trama] #board .sq.d.from,html[data-trama] #board .sq.d.to{background-i
 #board .sq .pc{z-index:2}
 .pc-tema[data-trama] i{background-image:var(--trama-mini),conic-gradient(var(--d) 25%,var(--l) 0 50%,var(--d) 0 75%,var(--l) 0);background-size:var(--trama-mini-tam,auto),50% 50%}
 .pc-tema[data-trama]:after{content:"";position:absolute;inset:0;pointer-events:none;background:var(--dibujo,none) center/100% 100% no-repeat;opacity:.17}
+
+/* Reglas adicionales del sistema original de tramas */
+html[data-trama] .sq.l,html[data-trama] .ex-sq.l{background-image:var(--trama-l);background-size:var(--trama-tam,auto)}
+html[data-trama] .sq.d,html[data-trama] .ex-sq.d{background-image:var(--trama-d);background-size:var(--trama-tam,auto)}
+html[data-trama] .pc-muestra{
+  background-image:var(--trama-mini),conic-gradient(var(--dark) .25turn,var(--light) .25turn .5turn,var(--dark) .5turn .75turn,var(--light) .75turn);
+  background-size:var(--trama-mini-tam,auto),100% 100%
+}
+html[data-trama] .sq.l.sel,html[data-trama] .sq.l.last{
+  background-image:linear-gradient(var(--hl),var(--hl)),var(--trama-l)
+}
+html[data-trama] .sq.d.sel,html[data-trama] .sq.d.last{
+  background-image:linear-gradient(var(--hl),var(--hl)),var(--trama-d)
+}
+html[data-trama] .sq.d,html[data-trama] .ex-sq.d{background-color:var(--base-d,var(--dark))}
+html[data-trama="periodico"] .sq .pc svg,html[data-trama="periodico"] .ex-pc svg{
+  filter:drop-shadow(0 0 1.6px var(--halo,#F4E2D0)) drop-shadow(0 0 1.6px var(--halo,#F4E2D0))
+}
+html[data-trama="periodico"][data-coords="si"] .ex-sq:after{
+  text-shadow:0 0 2px var(--light),0 0 2px var(--light),0 0 3px var(--light)
+}
