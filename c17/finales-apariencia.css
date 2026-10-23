@@ -52,3 +52,12 @@ html[data-piel] .head .brand{font-weight:700}
 .appearance-help{padding:0 14px 12px}
 }
 @media(prefers-reduced-motion:reduce){.appearance-theme:hover{transform:none}}
+
+/* Marco, controles y coordenadas de Aprende Ajedrez */
+.frame{position:relative;margin:0 auto;width:100%;max-width:620px;padding:clamp(10px,2.2vw,16px);border-radius:24px}
+.coordinate-toggle{border:1px solid var(--c-linea2);border-radius:12px;background:var(--c-sup);color:var(--c-tinta);font-size:.83rem;font-weight:630;padding:10px 14px;cursor:pointer}
+.coordinate-toggle[aria-pressed=true]{border-color:var(--c-aa);background:color-mix(in srgb,var(--c-aa) 14%,var(--c-sup))}
+html[data-coords="si"] #board .coord{display:none}
+html[data-coords="si"] #board .sq:after{content:attr(data-sq);position:absolute;inset:0;z-index:1;pointer-events:none;display:flex;align-items:center;justify-content:center;font-size:clamp(9px,2.2vw,14px);font-weight:500;letter-spacing:.02em;opacity:.7}
+html[data-coords="si"] #board .sq.l:after{color:var(--coord-l)}
+html[data-coords="si"] #board .sq.d:after{color:var(--coord-d)}
