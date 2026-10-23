@@ -22,6 +22,7 @@
     '3':{t:'Aprende Ajedrez',s:'Desde la primera jugada',c1:'--c-menta',c2:'--c-cielo'},
     '1':{t:'Método PC1',s:'Táctica hasta que salga sola',c1:'--c-cielo',c2:'--c-lila'},
     '2':{t:'Método PC2',s:'Pensar como un maestro',c1:'--c-lila',c2:'--c-rosa'},
+    '4':{t:'Finales de peones',s:'Aprender qué peón mover',c1:'--c-menta',c2:'--c-mant'},
     'id':{t:'Mi ID',s:'Tu avance, en todos tus dispositivos',c1:'--c-mant',c2:'--c-lila'}
   };
   var pasando=false,ultimoCambio=0;
