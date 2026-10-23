@@ -5,7 +5,7 @@ Aprende ajedrez desde cero y entrena con dos métodos de repetición.
 - **Aprende Ajedrez**: 218 lecciones en seis niveles.
 - **Método PC1** (Avanzado): 1128 ejercicios tácticos.
 - **Método PC2** (Muy avanzado): 1000 ejercicios posicionales.
-- **Finales de peones**: 32 lecciones en ocho familias dentro del mismo entrenador pedagógico de «Aprende Ajedrez». Reutiliza sus pantallas, piezas, tableros, fondos, tutor, animaciones, flechas, sonidos, controles de reproducción, pistas, práctica sin test, favoritos, progreso y «Mi ID». El avance se guarda en claves `aa_finales_*`, separado del progreso general.
+- **Finales de peones (avanzado)**: 32 posiciones reales de ocho partidas magistrales publicadas, agrupadas en ocho familias estratégicas (aislado, colgantes, Carlsbad, Francesa, Erizo, India de rey, Benoni y Maróczy). Conserva los controles, animaciones, tutor, pistas, partidas, historial, favoritos, sonidos y sincronización de Aprende Ajedrez. Las nuevas lecciones usan identificadores `S1-001` a `S8-004` para no mezclar sus resultados con el antiguo temario básico.
 - **Mi ID**: guarda el avance en la nube y lo abre en otro dispositivo (también con un código QR).
 
 Web: https://la86926.github.io/chess17/
@@ -13,7 +13,7 @@ Web: https://la86926.github.io/chess17/
 ## Cómo está hecho
 
 Las secciones originales y la sincronización son las mismas de `la86926/chess` (misma nube de Firebase).
-El nuevo laboratorio vive en `index4.html` y reutiliza el sistema visual de `c17/`:
+El laboratorio avanzado vive en `index4.html`, usa las lecciones de `c17/finales-aa-lecciones.js`, la pedagogía nativa de `c17/finales-aa-app.js` y conserva el sistema visual de `c17/`:
 
 | Archivo | Para qué sirve |
 |---|---|
