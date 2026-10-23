@@ -39,7 +39,7 @@ function validate(env){
   if(env.checksum!==fnv1a(JSON.stringify(env.payload)))throw new Error('Copia dañada');
   var p=env.payload;
   if(!plain(p.storage)||!plain(p.storage.local)||!plain(p.storage.session)||!plain(p.cookies)||!plain(p.page))throw new Error('Estructura inválida');
-  if(p.page.file!=='index1.html'&&p.page.file!=='index2.html'&&p.page.file!=='index3.html')throw new Error('Index inválido');
+  if(p.page.file!=='index1.html'&&p.page.file!=='index2.html'&&p.page.file!=='index3.html'&&p.page.file!=='index4.html')throw new Error('Index inválido');
   [p.storage.local,p.storage.session,p.cookies].forEach(function(group){
     Object.keys(group).forEach(function(k){if(!appKey(k))throw new Error('Clave inválida: '+k);});
   });
@@ -2045,7 +2045,7 @@ header.topbar.topbar-anim{overflow:hidden}
     <div class="boardhead aa-boardhead">
       <div class="boardhead-left">
         <div class="aa-eyebrow" id="aa-eyebrow">NIVEL I · LECCIÓN 1</div>
-        <h1 class="exno aa-titulo" id="aa-titulo">Aprende Ajedrez</h1>
+        <h1 class="exno aa-titulo" id="aa-titulo">Finales de peones</h1>
         <div class="aa-meta">
           <span class="chip F" id="chip">Lección</span>
           <span class="toplay" id="toplay">Juegan: <b>Blancas</b></span>
@@ -2282,7 +2282,7 @@ header.topbar.topbar-anim{overflow:hidden}
 <section class="view" id="v-guide">
  <div class="reading">
   <h1>Cómo aprender aquí</h1>
-  <p class="lead">Aprende Ajedrez enseña con el tablero: primero observas, luego practicas con ayuda y al final lo haces tú solo.</p>
+  <p class="lead">Finales de peones utiliza el mismo entrenador de Aprende Ajedrez: primero analizas la estructura, luego observas demostraciones animadas, practicas con ayuda y finalmente resuelves la posición sin ayuda.</p>
 
   <h2><span class="k">01</span> Los pasos de cada lección</h2>
   <p>Cada número junto al tablero es <strong>un paso</strong> de la lección: primero exploras la posición, luego ves la demostración paso a paso y un resumen de la idea, y al final resuelves los ejercicios en el tablero. Cada número se pone verde cuando lo terminas. Toca cualquiera para ir a él, aunque no hayas hecho los anteriores.</p>
@@ -2300,7 +2300,7 @@ header.topbar.topbar-anim{overflow:hidden}
   <p>El <strong>corazón</strong> guarda el ítem que estás viendo: su nivel, su lección y su número. Elige una o varias carpetas y pulsa Guardar favorito. Empiezas con seis carpetas (Nivel I a Nivel VI) que puedes renombrar o eliminar, y puedes crear las tuyas. Al tocar un favorito vuelves exactamente a ese ítem.</p>
 
   <h2><span class="k">06</span> Tu avance se guarda</h2>
-  <p>Cada lección iniciada o completada, cada ejercicio resuelto y tu último punto de estudio quedan guardados; el botón del reloj, junto a Solución, abre tu <strong>historial</strong>. Con <strong>Continuar donde me quedé</strong> vuelves al lugar exacto donde te quedaste. Con tu <strong>ID</strong> (en «Mi ID», en el menú) recuperas tu avance, tu historial y tus carpetas en otro dispositivo. El progreso de Aprende Ajedrez es independiente del Método PC1 y del Método PC2.</p>
+  <p>Cada lección iniciada o completada, cada ejercicio resuelto y tu último punto de estudio quedan guardados; el botón del reloj, junto a Solución, abre tu <strong>historial</strong>. Con <strong>Continuar donde me quedé</strong> vuelves al lugar exacto donde te quedaste. Con tu <strong>ID</strong> (en «Mi ID», en el menú) recuperas tu avance, tu historial y tus carpetas en otro dispositivo. Tu progreso de Finales de peones se guarda separado de Aprende Ajedrez, Método PC1 y Método PC2, y se sincroniza con Mi ID.</p>
 
   <div class="callout">Consejo: antes de mover, pregúntate siempre qué amenaza tu rival y qué jaques, capturas y amenazas tienes tú. Ese hábito es la base de todas las lecciones.</div>
  </div>
@@ -7952,7 +7952,7 @@ const PENDING_KEY='__pc_backup_pending_v3';
 const RESTORE_UI_KEY='__pc_backup_restore_ui_v3';
 const RESTORE_NOTICE_KEY='__pc_backup_restore_notice_v3';
 const RESTORE_ERROR_KEY='__pc_backup_restore_error_v3';
-const VALID_PAGES=new Set(['index1.html','index2.html','index3.html']);
+const VALID_PAGES=new Set(['index1.html','index2.html','index3.html','index4.html']);
 function isAppKey(key){return typeof key==='string'&&(key.startsWith('wp_')||key.startsWith('wp2_')||key.startsWith('pc_')||key.startsWith('aa_'));}
 function currentFile(){const p=location.pathname.split('/').pop()||'index1.html';try{return decodeURIComponent(p).toLowerCase();}catch(e){return p.toLowerCase();}}
 function appDirectory(){const p=location.pathname;return p.slice(0,p.lastIndexOf('/')+1)||'/';}
