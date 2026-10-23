@@ -352,7 +352,20 @@ renderRef=function(){
   el('ref-tags').innerHTML='';
   var nota=el('ref-note');
   if(A.modo==='descubre'){nota.textContent=A.descubreItem&&A.descubreItem.revelado?('Era: '+A.descubreItem.motivo+'.'):'La idea se revela al terminar.';nota.style.display='block';}
-  else if(l&&l.idea){nota.innerHTML=rico(l.idea);nota.style.display='block';}
+  else if(l&&l.idea){
+    nota.innerHTML=rico(l.idea);
+    /* Atribución verificable para cada posición magistral. Nunca arrastrar
+       enlaces o notas desde otra lección. */
+    if(l.fuente&&/^https:\/\/golgichess\.com\/pawn-structures\/[a-z0-9-]+$/.test(String(l.fuente.url||''))){
+      var fuente=document.createElement('p');
+      fuente.className='aa-fuente-estudio';
+      var a=document.createElement('a');
+      a.href=l.fuente.url;a.target='_blank';a.rel='noopener noreferrer';
+      a.textContent='Ver partida estudiada: '+String(l.fuente.nombre||'partida magistral');
+      fuente.appendChild(a);nota.appendChild(fuente);
+    }
+    nota.style.display='block';
+  }
   else{nota.textContent='Esta lección está en preparación: pronto tendrá demostración, ejercicios y comprobación.';nota.style.display='block';}
 };
 
@@ -1087,10 +1100,10 @@ document.addEventListener('keydown',function(e){
   }
 },true);
 
-/* Compartir: imagen del tablero + enlace directo a la lección */
+/* Compartir: imagen del tablero + enlace directo a un estudio avanzado */
 window.aaTituloCompartir=function(){return A.modo==='descubre'?'Repaso':CAT.nombreCompleto(A.id);};
 compartirTablero=function(){
-  var ref=partesFav(refActual()||A.id||'F1-001'),id=ref.id,item=ref.item||1,c=catalogoDe(id);
+  var ref=partesFav(refActual()||A.id||'S1-001'),id=ref.id,item=ref.item||1,c=catalogoDe(id);
   var enlace='https://la86926.github.io/chess17/?metodo=4&leccion='+encodeURIComponent(id)+'&item='+item;
   var texto=(c?('Nivel '+CAT.romano[c.nivel]+' · Lección '+c.num+' · '+c.titulo+' · Ítem '+item):'Aprende Ajedrez')+'\n\n'+enlace;
   var nombre='finales-de-peones-'+id+'.png';
