@@ -90,7 +90,7 @@
     arco.style.setProperty('--o',(l*(1-Math.min(1,f))).toFixed(2));
   }
   function pintarAvance(){
-    var datos={'3':[contarAprende(),218,'aa'],'1':[contarLista('wp_solved'),1128,'pc1'],'2':[contarLista('wp2_solved'),1000,'pc2']};
+    var datos={'3':[contarAprende(),218,'aa'],'1':[contarLista('wp_solved'),1128,'pc1'],'2':[contarLista('wp2_solved'),1000,'pc2'],'4':[contarLista('aa_finales_peones_v1'),32,'fin']};
     for(var app in datos){
       var hecho=Math.min(datos[app][0],datos[app][1]),total=datos[app][1],frac=hecho/total,id=datos[app][2];
       var el=document.querySelector('.app-choice[data-app="'+app+'"]');
