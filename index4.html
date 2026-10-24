@@ -7,9 +7,9 @@
 <link rel="preload" href="c17/fondos.js?v=5" as="script">
 <!-- las lecciones y la app se piden desde el principio, junto con la página -->
 <link rel="preload" href="aa-app.css?v=20261019-aa64" as="style">
-<link rel="preload" href="c17/finales-aa-lecciones.js?v=5" as="script">
+<link rel="preload" href="c17/finales-aa-lecciones.js?v=6" as="script">
 <link rel="preload" href="c17/finales-aa-datos.js?v=1" as="script">
-<link rel="preload" href="c17/finales-aa-app.js?v=5" as="script">
+<link rel="preload" href="c17/finales-aa-app.js?v=6" as="script">
 <link rel="preload" href="pc-compartir.js?v=3" as="script">
 <link rel="preload" href="pc-mascota.js?v=20" as="script">
 <script id="pc-backup-preload">
@@ -2006,6 +2006,31 @@ header.topbar.topbar-anim{overflow:hidden}
 <link rel="stylesheet" href="c17/fuentes.css?v=3">
 <link rel="stylesheet" href="c17/tokens.css?v=7">
 <link rel="stylesheet" href="c17/piel.css?v=15">
+<style id="finales-triangulacion-mostaza">
+/* El triángulo aparece únicamente en las demostraciones de triangulación.
+   SVG sobre las casillas: no modifica el tamaño del tablero ni intercepta clics. */
+.aa-app .aa-capa .aa-triangulo{pointer-events:none}
+.aa-app .aa-capa .aa-triangulo-fondo{fill:rgba(199,151,43,.13);stroke:none}
+.aa-app .aa-capa .aa-triangulo-trazo{
+  fill:none;stroke:#c7972b;stroke-width:.105;stroke-linejoin:round;
+  stroke-linecap:round;filter:drop-shadow(0 0 2px rgba(66,42,5,.75))
+}
+.aa-app .aa-capa .aa-triangulo-vertice{
+  fill:#f5cc63;stroke:#67470f;stroke-width:.07;opacity:.98;
+}
+.aa-app .aa-capa .aa-triangulo.dibujar .aa-triangulo-trazo{
+  animation:aa-trazo-triangulo 2.8s cubic-bezier(.35,.03,.22,1) forwards;
+}
+.aa-app .aa-capa .aa-triangulo.dibujar .aa-triangulo-vertice{
+  opacity:0;animation:aa-vertice-triangulo .35s ease-out forwards;
+}
+@keyframes aa-trazo-triangulo{from{stroke-dashoffset:var(--tri-l)}to{stroke-dashoffset:0}}
+@keyframes aa-vertice-triangulo{to{opacity:.98}}
+@media(prefers-reduced-motion:reduce){
+  .aa-app .aa-capa .aa-triangulo.dibujar .aa-triangulo-trazo{animation:none;stroke-dashoffset:0}
+  .aa-app .aa-capa .aa-triangulo.dibujar .aa-triangulo-vertice{animation:none;opacity:.98}
+}
+</style>
 <style id="finales-cabeceras-adaptables">
 /* Exclusivo de Finales de peones: permitir como máximo dos líneas completas
    en el título sin alterar el diseño global de Aprende Ajedrez. */
@@ -8097,11 +8122,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 <script src="pc-compartir.js?v=3"></script>
-<script src="c17/finales-aa-lecciones.js?v=5"></script>
+<script src="c17/finales-aa-lecciones.js?v=6"></script>
 <script src="c17/finales-aa-datos.js?v=1"></script>
-<!-- Nuevo temario E1–E8 de finales estrictamente de reyes y peones.
-     Las lecciones S de partidas y F del temario elemental quedan archivadas. -->
-<script src="c17/finales-aa-app.js?v=5"></script>
+<!-- Currículo de rupturas avanzadas y triangulación animada. Se conserva el progreso previo de las cuatro rupturas E4. -->
+<script src="c17/finales-aa-app.js?v=6"></script>
 <script src="pc-mascota.js?v=20"></script>
 </body>
 </html>
