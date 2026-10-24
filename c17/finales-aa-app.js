@@ -407,7 +407,7 @@ renderRef=function(){
        referencia; las variantes didácticas son propias, no partidas inventadas. */
     if(l.fuente){
       var enlaceFuente=String(l.fuente.url||'');
-      var dominioPermitido=/^https:\/\/(?:www\.newinchess\.com|melvincarvalho\.github\.io|www\.everand\.com|www\.arves\.org)\//.test(enlaceFuente);
+      var dominioPermitido=/^https:\/\/(?:www\.newinchess\.com|melvincarvalho\.github\.io|www\.everand\.com|www\.arves\.org|chessendings\.com|es\.wikipedia\.org)\//.test(enlaceFuente);
       if(dominioPermitido){
         var fuente=document.createElement('p');
         fuente.className='aa-fuente-estudio';
@@ -1156,7 +1156,7 @@ document.addEventListener('keydown',function(e){
 /* Compartir: imagen del tablero + enlace directo a un estudio avanzado */
 window.aaTituloCompartir=function(){return A.modo==='descubre'?'Repaso':CAT.nombreCompleto(A.id);};
 compartirTablero=function(){
-  var ref=partesFav(refActual()||A.id||'E1-001'),id=ref.id,item=ref.item||1,c=catalogoDe(id);
+  var ref=partesFav(refActual()||A.id||'E4-001'),id=ref.id,item=ref.item||1,c=catalogoDe(id);
   var enlace='https://la86926.github.io/chess17/?metodo=4&leccion='+encodeURIComponent(id)+'&item='+item;
   var texto=(c?('Nivel '+CAT.romano[c.nivel]+' · Lección '+c.num+' · '+c.titulo+' · Ítem '+item):'Aprende Ajedrez')+'\n\n'+enlace;
   var nombre='finales-de-rey-y-peones-'+id+'.png';
