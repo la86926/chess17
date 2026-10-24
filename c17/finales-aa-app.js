@@ -146,18 +146,35 @@ function svgMarca(m,animar){
   }
   return '<g class="'+cls+'">'+g+'</g>';
 }
+/* Triangulación: tres vértices del rey y recorrido cerrado, en mostaza.
+   Se dibuja sobre el tablero real sin bloquear clics ni tocar piezas. */
+function svgTriangulo(vertices,animar){
+  if(!Array.isArray(vertices)||vertices.length!==3||!vertices.every(function(s){return /^[a-h][1-8]$/.test(s);}))return '';
+  var p=vertices.map(coord),d='M'+p[0].x+' '+p[0].y+'L'+p[1].x+' '+p[1].y+'L'+p[2].x+' '+p[2].y+'Z';
+  var longitud=Math.hypot(p[1].x-p[0].x,p[1].y-p[0].y)+Math.hypot(p[2].x-p[1].x,p[2].y-p[1].y)+Math.hypot(p[0].x-p[2].x,p[0].y-p[2].y);
+  var movimiento=!!animar&&!reducirMov;
+  return '<g class="aa-triangulo'+(movimiento?' dibujar':'')+'" style="--tri-l:'+longitud.toFixed(3)+'" aria-hidden="true">'+
+    '<path class="aa-triangulo-fondo" d="'+d+'"/>'+
+    '<path class="aa-triangulo-trazo" d="'+d+'" stroke-dasharray="'+longitud.toFixed(3)+'" stroke-dashoffset="'+(movimiento?longitud.toFixed(3):'0')+'"/>'+
+    p.map(function(q,i){return '<circle class="aa-triangulo-vertice" cx="'+q.x+'" cy="'+q.y+'" r=".20" style="animation-delay:'+(movimiento?(i*0.95).toFixed(2):0)+'s"/>';}).join('')+
+    '</g>';
+}
 function pintarCapa(animar){
   var vieja=boardEl.querySelector('.aa-capa');if(vieja)vieja.remove();
-  var F=A.capa.flechas||[],M=A.capa.marcas||[];
-  if(F.length||M.length){
+  var F=A.capa.flechas||[],M=A.capa.marcas||[],T=A.capa.triangulo;
+  if(F.length||M.length||T){
     var svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
     svg.setAttribute('viewBox','0 0 8 8');svg.setAttribute('class','aa-capa');svg.setAttribute('aria-hidden','true');
     svg.innerHTML='<defs><radialGradient id="aaJaque"><stop offset="0" stop-color="#e0533d" stop-opacity=".55"/><stop offset="1" stop-color="#e0533d" stop-opacity="0"/></radialGradient></defs>'+
-      M.map(function(m){return svgMarca(m,animar);}).join('')+F.map(function(f,i){return svgFlecha(f,i,animar);}).join('');
+      M.map(function(m){return svgMarca(m,animar);}).join('')+F.map(function(f,i){return svgFlecha(f,i,animar);}).join('')+svgTriangulo(T,animar);
     boardEl.appendChild(svg);
   }
 }
 function fijarCapa(flechas,marcas,animar){A.capa={flechas:(flechas||[]).slice(),marcas:(marcas||[]).slice()};pintarCapa(animar);}
+function fijarTriangulo(vertices){
+  A.capa.triangulo=vertices&&vertices.length===3?vertices.slice():null;
+  pintarCapa(true);
+}
 function limpiarCapa(){A.capaPista=false;fijarCapa([],[]);}
 
 /* Cada vez que el entrenador vuelve a dibujar el tablero, se repinta la capa. */
@@ -708,6 +725,7 @@ function mostrarPasoDemo(animarJugada){
       A.revelar=setTimeout(sig,espera);
     })();
   }else fijarCapa(flechas,marcas,true);
+  if(S.triangulo)fijarTriangulo(S.triangulo);
   tutor(texto,A.sencillo?'sencillo':'');
   el('aa-paso-n').textContent=(A.paso+1)+' / '+A.demo.length;
   el('aa-paso-ant').disabled=A.paso===0;
